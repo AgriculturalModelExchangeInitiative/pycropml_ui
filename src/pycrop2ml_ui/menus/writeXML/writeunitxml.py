@@ -197,10 +197,10 @@ class writeunitXML():
                     buffer += '\n\t\t<Output name="{}" description="{}" variablecategory="{}" datatype="{}" min="{}" max="{}" unit="{}" uri="{}"/>'.format(self._df['Outputs']['Name'][i],self._df['Outputs']['Description'][i],self._df['Outputs']['Category'][i],self._df['Outputs']['DataType'][i],self._df['Outputs']['Min'][i],self._df['Outputs']['Max'][i],self._df['Outputs']['Unit'][i],self._df['Outputs']['Uri'][i])
 
         buffer += '\n\t</Outputs>\n'
-
-        if self._df['Functions']:
+      
+        if '' not in  self._df['Functions']:
             for i,j in self._df['Functions'].items():
-                buffer += '\n\t<Function name="{}" language="Cyml" filename="{}" type="{}" description="" />'.format(i.split('.')[0].split('/')[-1], i, j)
+                buffer += '\n\t<Function name="{}" language="Cyml" filename="algo/pyx/{}.pyx" type="{}" description="" />'.format(i.split('.')[0].split('/')[-1], i, j)
         
         buffer += '\n\n\t<Algorithm language="Cyml" platform="" filename="algo/pyx/{}.pyx" />'.format(self._datas['Model name'])
         buffer += '\n\n\t<Initialization name="init.{0}" language="Cyml" filename="algo/pyx/init.{0}.pyx" description="" />'.format(self._datas['Model name'])
