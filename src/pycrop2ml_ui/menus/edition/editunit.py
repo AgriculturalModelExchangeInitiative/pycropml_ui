@@ -132,7 +132,7 @@ class editUnit():
         
         if self._xmlfile.function:
             self._dataframeFunction = pandas.DataFrame(data={
-                'Filename': [i.filename for i in self._xmlfile.function],
+                'Filename': [i.filename.split(".")[0].split("/")[-1] for i in self._xmlfile.function],
                 'Type': pandas.Categorical([i.type for i in self._xmlfile.function], categories=['','internal','external'])
             })
         else:
@@ -947,20 +947,20 @@ class editUnit():
         widget.off('cell_edited', self._cell_edited_algofunc)
 
         if event['column'] == 'Filename' and event['new']:
-            if event['new'].split('.')[-1] != 'pyx':
+            """if event['new'].split('.')[-1] != 'pyx':
                 widget.edit_cell(event['index'], 'Filename', event['old'])
 
                 with self._out2:
-                    print('File must be .pyx format.')
-            else:
-                df = widget.get_changed_df()
-                tmplist = [i for i in df['Filename']]
-                tmplist.remove(event['new'])
-                if event['new'] in tmplist:
-                    widget.edit_cell(event['index'], 'Filename', event['old'])
+                    print('File must be .pyx format.')"""
+            #else:
+            df = widget.get_changed_df()
+            tmplist = [i for i in df['Filename']]
+            tmplist.remove(event['new'])
+            if event['new'] in tmplist:
+                widget.edit_cell(event['index'], 'Filename', event['old'])
 
-                    with self._out2:
-                        print('This filename is already in the list.')
+                with self._out2:
+                    print('This filename is already in the list.')
 
         widget.on('cell_edited', self._cell_edited_algofunc)
 
