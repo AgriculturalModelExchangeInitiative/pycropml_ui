@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from IPython.display import display
 import ipywidgets as wg
 

@@ -82,7 +82,7 @@ class editUnit():
                 'Min': [(i.min if i.min is not None else '') for i in self._xmlfile.inputs],
                 'Max': [(i.max if i.max is not None else '') for i in self._xmlfile.inputs],
                 'Unit': [i.unit for i in self._xmlfile.inputs],
-                'Uri': [(i.uri if i.uri is not None else '') for i in self._xmlfile.inputs]
+                'Uri': [(i.uri if "uri" in dir(i) and i.uri is not None else '') for i in self._xmlfile.inputs]
                 })
         
         else:
@@ -112,7 +112,7 @@ class editUnit():
                 'Min': [(i.min if i.min is not None else '') for i in self._xmlfile.outputs],
                 'Max': [(i.max if i.max is not None else '') for i in self._xmlfile.outputs],
                 'Unit': [i.unit for i in self._xmlfile.outputs],
-                'Uri': [(i.uri if i.uri is not None else '') for i in self._xmlfile.outputs]
+                'Uri': [(i.uri if "uri" in dir(i) and i.uri is not None else '') for i in self._xmlfile.outputs]
                 })
         
         else:

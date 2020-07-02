@@ -72,7 +72,7 @@ class transformationMenu():
                     try:
                         transpile_package(self._path.value, lg)
                     except:
-                        self._out.clear_output()
+                        #self._out.clear_output()
                         with self._out:
                             raise Exception('Critical error while transpiling the package {} into {}.'.format(self._path.value, lg))
 

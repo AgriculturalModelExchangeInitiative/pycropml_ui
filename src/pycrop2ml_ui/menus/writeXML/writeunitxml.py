@@ -225,7 +225,7 @@ class writeunitXML():
                     buffer += '\n\t\t\t\t<InputValue name="{}">{}</InputValue>'.format(k,v)
                     
                 for k,v in data['outputs'].items():
-                    buffer += '\n\t\t\t\t\t<OutputValue name="{}" precision="{}">{}</OutputValue>'.format(k,v[1],v[0])
+                    buffer += '\n\t\t\t\t<OutputValue name="{}" precision="{}">{}</OutputValue>'.format(k,v[1],v[0])
                 
                 buffer += '\n\t\t\t</Test>'
             buffer += '\n\t\t</Testset>'    
