@@ -80,7 +80,7 @@ class displayMenu():
 
             with self._out2:
                 display(wg.HTML('<font size="5"><b>Package {}</b></font>'.format(self._modelPath.value.split(os.path.sep)[-1])))
-                topo.display_wf()
+                topo.display_wf_svg()
 
 
 

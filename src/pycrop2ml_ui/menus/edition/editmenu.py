@@ -48,9 +48,11 @@ class editMenu():
         typemodel = self._selecter.value.split('.')
 
         with self._out:
+            print("kkkk")
             if typemodel[0] == 'unit':
-                try:               
+                try: 
                     unit = editunit.editUnit({'Path': self._modelPath.value+os.path.sep+'crop2ml', 'Model type': typemodel[0], 'Model name': typemodel[1]})
+                    print(unit)
                     unit.displayMenu()
                 except:
                     raise Exception('Could not load unit model edition menu.')
