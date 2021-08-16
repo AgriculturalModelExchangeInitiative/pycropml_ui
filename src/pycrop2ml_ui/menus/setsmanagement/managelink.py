@@ -118,7 +118,7 @@ class manageLink():
                 'Target': pandas.Categorical([i['Target'] if i['Target'] in self._listLinkTarget else '' for i in self._listlink], categories=self._listLinkTarget)
                 })
         
-        self._dfLinkqgrid = qgrid.show_grid(self._dfLink, show_toolbar=True)
+        self._dfLinkqgrid = qgrid.show_grid(self._dfLink,grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200}, show_toolbar=True)
 
 
 

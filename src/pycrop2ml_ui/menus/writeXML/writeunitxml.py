@@ -59,8 +59,9 @@ class writeunitXML():
         self._testsetdict = testsetdict
         self._iscreate = iscreate
         self._change_algo = True
-        self._change_init = True
-
+        self._change_init = False
+        if "unit.modelunit.xml" in os.listdir(self._datas['Path']) : os.remove(os.path.join(self._datas['Path'],"unit.modelunit.xml"))
+        if "composition.modelcomposite.xml" in os.listdir(self._datas['Path']) : os.remove(os.path.join(self._datas['Path'],"composition.modelcomposite.xml"))
 
 
     def _getDoc(self, f):
@@ -147,11 +148,11 @@ class writeunitXML():
                 raise Exception(ioerr)
 
         
-        split = self._datas['Path'].split(os.path.sep)
+        #split = self._datas['Path'].split(os.path.sep)
         buffer = ''
 
         buffer += '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE Model PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelUnit.dtd">\n'
-        buffer += '<ModelUnit modelid="{0}.{1}.{2}" name="{2}" timestep="{3}" version="{4}">'.format(self._datas['Model ID'],split[-2],self._datas['Model name'],self._datas['Timestep'], self._datas['Version'])
+        buffer += '<ModelUnit modelid="{0}.{1}" name="{1}" timestep="{2}" version="{2}">'.format(self._datas['Model ID'],self._datas['Model name'],self._datas['Timestep'], self._datas['Version'])
         buffer += '\n\t<Description>\n\t\t<Title>{}</Title>'.format(self._datas['Title'])
         buffer += '\n\t\t<Authors>{}</Authors>'.format(self._datas['Authors'])
         buffer += '\n\t\t<Institution>{}</Institution>'.format(self._datas['Institution'])
@@ -203,7 +204,9 @@ class writeunitXML():
                 buffer += '\n\t<Function name="{}" language="Cyml" filename="algo/pyx/{}.pyx" type="{}" description="" />'.format(i.split('.')[0].split('/')[-1], i, j)
         
         buffer += '\n\n\t<Algorithm language="Cyml" platform="" filename="algo/pyx/{}.pyx" />'.format(self._datas['Model name'])
-        buffer += '\n\n\t<Initialization name="init.{0}" language="Cyml" filename="algo/pyx/init.{0}.pyx" description="" />'.format(self._datas['Model name'])
+        
+        if ('init' in dir(self._df) and self._df['init']) or (self._change_init):
+            buffer += '\n\n\t<Initialization name="init.{0}" language="Cyml" filename="algo/pyx/init.{0}.pyx" description="" />'.format(self._datas['Model name'])
         buffer += '\n\n\t<Parametersets>'
 
         for name, args in self._paramsetdict.items():
@@ -239,7 +242,7 @@ class writeunitXML():
                 raise Exception('File unit.{}.xml could not be opened. {}'.format(self._datas['Model name'], ioerr))
 
 
-        if self._change_init:
+        if ('init' in dir(self._df) and self._df['init']) or (self._change_init):
             self._createInit()
         
         if self._change_algo:

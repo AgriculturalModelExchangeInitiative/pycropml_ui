@@ -94,8 +94,6 @@ class createMenu():
                         'Reference': self._reference.value,
                         'Abstract': self._abstract.value
                         }
-            
-            print( self._datas , "hhkksjkl")
 
             self._out.clear_output()
                 

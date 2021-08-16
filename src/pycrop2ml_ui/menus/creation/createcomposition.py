@@ -67,7 +67,7 @@ class createComposition():
 
 
         self._dataFrame = pandas.DataFrame(data={'Model name': pandas.Categorical([''], categories=liste)})
-        self._dataFrameqgrid = qgrid.show_grid(self._dataFrame, show_toolbar=True)
+        self._dataFrameqgrid = qgrid.show_grid(self._dataFrame, grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200}, show_toolbar=True)
         
 
 

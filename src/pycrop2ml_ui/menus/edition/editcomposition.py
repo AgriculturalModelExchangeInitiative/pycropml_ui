@@ -245,7 +245,7 @@ class editComposition():
                 'Model name': pandas.Categorical([''], categories=liste)
                 })
 
-        self._datamodeltab = qgrid.show_grid(self._dataframe, show_toolbar=True)
+        self._datamodeltab = qgrid.show_grid(self._dataframe, grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200},show_toolbar=True)
 
         self._tab = wg.Tab([self._informations, self._datamodeltab])
         self._tab.set_title(0, 'Header')

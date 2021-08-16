@@ -60,7 +60,7 @@ class editUnit():
 
         self._datas['Old name'] = self._xmlfile.name
         self._modelname.value = self._xmlfile.name
-        self._modelid.value = self._xmlfile.modelid.split('.')[0]
+        self._modelid.value = ".".join(self._xmlfile.modelid.split('.')[:-1])
         self._version.value = self._xmlfile.version
         self._timestep.value = self._xmlfile.timestep
 
@@ -75,7 +75,7 @@ class editUnit():
                 'Name': [i.name for i in self._xmlfile.inputs],
                 'Description': [i.description for i in self._xmlfile.inputs],
                 'InputType': pandas.Categorical([i.inputtype for i in self._xmlfile.inputs], categories=['','variable','parameter']),
-                'Category': pandas.Categorical([(i.variablecategory if hasattr(i,'variablecategory') else i.parametercategory) for i in self._xmlfile.inputs], categories=['','constant','species','genotypic','soil','private','state','rate','auxiliary']),
+                'Category': pandas.Categorical([(i.variablecategory if hasattr(i,'variablecategory') else i.parametercategory) for i in self._xmlfile.inputs], categories=['','constant','species','genotypic','soil','private','state','rate','auxiliary', 'exogenous']),
                 'DataType': pandas.Categorical([i.datatype for i in self._xmlfile.inputs], categories=['','DOUBLE','DOUBLELIST','DOUBLEARRAY','INT','INTLIST','INTARRAY','STRING','STRINGLIST','STRINGARRAY','BOOLEAN','DATE','DATELIST','DATEARRAY']),
                 'Len': [(i.len if hasattr(i, 'len') else '') for i in self._xmlfile.inputs],
                 'Default': [i.default for i in self._xmlfile.inputs],
@@ -90,7 +90,7 @@ class editUnit():
                 'Name': [''],
                 'Description': [''],
                 'InputType': pandas.Categorical([''], categories=['','variable','parameter']),
-                'Category': pandas.Categorical([''], categories=['','constant','species','genotypic','soil','private','state','rate','auxiliary']),
+                'Category': pandas.Categorical([''], categories=['','constant','species','genotypic','soil','private','state','rate','auxiliary', 'exogenous']),
                 'DataType': pandas.Categorical([''], categories=['','DOUBLE','DOUBLELIST','DOUBLEARRAY','INT','INTLIST','INTARRAY','STRING','STRINGLIST','STRINGARRAY','BOOLEAN','DATE','DATELIST','DATEARRAY']),
                 'Len': [''],
                 'Default': [''],
@@ -100,13 +100,13 @@ class editUnit():
                 'Uri': ['']
                 })
 
-        self._qgridIn = qgrid.show_grid(self._dataframeIn, show_toolbar=True)
+        self._qgridIn = qgrid.show_grid(self._dataframeIn,grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200}, show_toolbar=True)
         
         if self._xmlfile.outputs:
             self._dataframeOut = pandas.DataFrame(data={
                 'Name':[i.name for i in self._xmlfile.outputs],
                 'Description': [i.description for i in self._xmlfile.outputs],
-                'Category': pandas.Categorical([(i.variablecategory if hasattr(i, 'variablecategory') else '') for i in self._xmlfile.outputs], categories=['','state','rate','auxiliary']),
+                'Category': pandas.Categorical([(i.variablecategory if hasattr(i, 'variablecategory') else '') for i in self._xmlfile.outputs], categories=['','state','rate','auxiliary', 'exogenous']),
                 'DataType': pandas.Categorical([i.datatype for i in self._xmlfile.outputs], categories=['','DOUBLE','DOUBLELIST','DOUBLEARRAY','INT','INTLIST','INTARRAY','STRING','STRINGLIST','STRINGARRAY','BOOLEAN','DATE','DATELIST','DATEARRAY']),
                 'Len': [(i.len if hasattr(i, 'len') else '') for i in self._xmlfile.outputs],
                 'Min': [(i.min if i.min is not None else '') for i in self._xmlfile.outputs],
@@ -119,7 +119,7 @@ class editUnit():
             self._dataframeOut = pandas.DataFrame(data={
                 'Name':[''],
                 'Description': [''],
-                'Category': pandas.Categorical([''], categories=['','state','rate','auxiliary']),
+                'Category': pandas.Categorical([''], categories=['','state','rate','auxiliary', 'exogenous']),
                 'DataType': pandas.Categorical([''], categories=['','DOUBLE','DOUBLELIST','DOUBLEARRAY','INT','INTLIST','INTARRAY','STRING','STRINGLIST','STRINGARRAY','BOOLEAN','DATE','DATELIST','DATEARRAY']),
                 'Len': [''],
                 'Min': [''],
@@ -128,7 +128,7 @@ class editUnit():
                 'Uri': ['']
                 })
 
-        self._qgridOut = qgrid.show_grid(self._dataframeOut, show_toolbar=True)
+        self._qgridOut = qgrid.show_grid(self._dataframeOut, grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200},show_toolbar=True)
         
         if self._xmlfile.function:
             self._dataframeFunction = pandas.DataFrame(data={
@@ -141,7 +141,7 @@ class editUnit():
                 'Type': pandas.Categorical([''], categories=['','internal','external'])
             })
 
-        self._qgridFunction = qgrid.show_grid(self._dataframeFunction, show_toolbar=True)
+        self._qgridFunction = qgrid.show_grid(self._dataframeFunction,grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200}, show_toolbar=True)
         
 
 
@@ -416,11 +416,11 @@ class editUnit():
 
             if df['InputType'][event['index']] == 'variable':
 
-                if event['new'] not in ['','state','rate','auxiliary']:
+                if event['new'] not in ['','state','rate','auxiliary', 'exogenous']:
                     widget.edit_cell(event['index'], 'Category', event['old'])
 
                     with self._out2:
-                        print("Warning : variable category must be among the list ['state','rate','auxiliary'].")
+                        print("Warning : variable category must be among the list ['state','rate','auxiliary', 'exogenous].")
             
             elif df['InputType'][event['index']] == 'parameter':
 
