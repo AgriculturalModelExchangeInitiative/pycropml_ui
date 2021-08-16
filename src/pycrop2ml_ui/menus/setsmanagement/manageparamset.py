@@ -275,7 +275,7 @@ class manageParamset():
             self._paramselecter.disabled = True
             self._apply.disabled = True
 
-            self._currentQgrid = qgrid.show_grid(self._paramsetdictDataframe[self._paramselecter.value][0], show_toolbar=False)
+            self._currentQgrid = qgrid.show_grid(self._paramsetdictDataframe[self._paramselecter.value][0], grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200},show_toolbar=False)
             self._description.value = self._paramsetdictDataframe[self._paramselecter.value][1]
 
             with self._out2:

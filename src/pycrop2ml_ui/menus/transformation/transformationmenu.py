@@ -28,10 +28,17 @@ class transformationMenu():
         self._csharp = wg.Checkbox(value=False, description='CSharp', disabled=False)
         self._fortran = wg.Checkbox(value=False, description='Fortran', disabled=False)
         self._python = wg.Checkbox(value=False, description='Python', disabled=False)
-        self._r = wg.Checkbox(value=False, description='R', disabled=True)
-        self._cpp = wg.Checkbox(value=False, description='C++', disabled=True)
+        self._r = wg.Checkbox(value=False, description='R', disabled=False)
+        self._cpp = wg.Checkbox(value=False, description='C++', disabled=False)
+        self._simplace = wg.Checkbox(value=False, description='Simplace', disabled=False)
+        self._bioma = wg.Checkbox(value=False, description='Bioma', disabled=False)
+        self._dssat = wg.Checkbox(value=False, description='Dssat', disabled=False)
+        self._openalea = wg.Checkbox(value=False, description='OpenAlea', disabled=False)
+        self._record = wg.Checkbox(value=False, description='Record', disabled=False)
+        self._stics = wg.Checkbox(value=False, description='Stics', disabled=False)
+        self._apsim = wg.Checkbox(value=False, description='Apsim', disabled=False)
 
-        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model transformation</b></font>'), wg.HBox([self._path, self._browse]), self._java, self._csharp, self._fortran, self._python, self._r, self._cpp, wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
+        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model transformation</b></font>'), wg.HBox([self._path, self._browse]), wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
 
         self._listlanguage = []
 
@@ -62,6 +69,20 @@ class transformationMenu():
                 self._listlanguage.append('r')
             if self._cpp.value:
                 self._listlanguage.append('cpp')
+            if self._simplace.value:
+                self._listlanguage.append('simplace')
+            if self._bioma.value:
+                self._listlanguage.append('bioma')
+            if self._dssat.value:
+                self._listlanguage.append('dssat')
+            if self._openalea.value:
+                self._listlanguage.append('openalea')
+            if self._record.value:
+                self._listlanguage.append('record')
+            if self._stics.value:
+                self._listlanguage.append('stics')
+            if self._apsim.value:
+                self._listlanguage.append('apsim')
 
             if not self._listlanguage:
                 with self._out2:

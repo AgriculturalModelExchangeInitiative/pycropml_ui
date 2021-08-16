@@ -50,6 +50,7 @@ class manageTestset():
         - df : {
                 'Inputs' : pandas.DataFrame,
                 'Functions' : dict(),
+                'initialization'
                 'Outputs' : pandas.DataFrame -> only if iscreate is False
                }
 
@@ -324,7 +325,7 @@ class manageTestset():
             self._createTestset.disabled = True
             self._apply.disabled = True
 
-            self._currentQgrid = qgrid.show_grid(self._testsetsDataframe[self._testsetSelecter.value][0][self._testSelecter.value], show_toolbar=False)
+            self._currentQgrid = qgrid.show_grid(self._testsetsDataframe[self._testsetSelecter.value][0][self._testSelecter.value], grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200},show_toolbar=False)
             apply = wg.Button(value=False, description='Apply', disabled=False, button_style='success')
 
             with self._out_test:

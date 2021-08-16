@@ -48,7 +48,7 @@ class createUnit():
             'Name':[''],
             'Description': [''],
             'InputType': pandas.Categorical([''], categories=['','variable','parameter']),
-            'Category': pandas.Categorical([''], categories=['','constant','species','genotypic','soil','private','state','rate','auxiliary']),
+            'Category': pandas.Categorical([''], categories=['','constant','species','genotypic','soil','private','state','rate','auxiliary', 'exogenous']),
             'DataType': pandas.Categorical([''], categories=['','DOUBLE','DOUBLELIST','DOUBLEARRAY','INT','INTLIST','INTARRAY','STRING','STRINGLIST','STRINGARRAY','BOOLEAN','DATE','DATELIST','DATEARRAY']),
             'Len': [''],
             'Default': [''],
@@ -57,13 +57,15 @@ class createUnit():
             'Unit': [''],
             'Uri': ['']
             })
-        self._inouttab = qgrid.show_grid(self._dataframeInputs, show_toolbar=True)
+        self._inouttab = qgrid.show_grid(self._dataframeInputs,grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200}, show_toolbar=True)
 
         self._dataframeFunc = pandas.DataFrame(data={
             'Filename':[''],
             'Type': pandas.Categorical([''], categories=['','internal','external'])
             })
-        self._functionqgrid = qgrid.show_grid(self._dataframeFunc, show_toolbar=True)
+        self._functionqgrid = qgrid.show_grid(self._dataframeFunc,grid_options={'forceFitColumns': False, 'defaultColumnWidth': 200}, show_toolbar=True)
+
+        self._init = wg.Checkbox(value=False,description='Initialization Function',indent=True)
 
         #data
         self._datas = data
@@ -125,6 +127,7 @@ class createUnit():
                     count += 1                  
 
             return '' not in filenames+types
+        
 
 
 
@@ -149,14 +152,14 @@ class createUnit():
             with self._out:
                 if paramdict:
                     try:
-                        menu = manageparamset.manageParamset(self._datas, paramdict, dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename'] if i],[j for j in self._dataframeFunc['Type'] if j]))}, vardict, dict(), iscreate=True)
+                        menu = manageparamset.manageParamset(self._datas, paramdict, dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename'] if i],[j for j in self._dataframeFunc['Type'] if j])), 'init':self._init.value}, vardict, dict(), iscreate=True)
                         menu.displayMenu()
                     except:
                         raise Exception('Could not load parametersets managing menu')
             
                 elif vardict:      
                     try:
-                        menu = managetestset.manageTestset(self._datas, vardict, dict(), dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename']],[j for j in self._dataframeFunc['Type']]))}, iscreate=True)
+                        menu = managetestset.manageTestset(self._datas, vardict, dict(), dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename']],[j for j in self._dataframeFunc['Type']])),'init':self._init.value}, iscreate=True)
                         menu.displayMenu()
                     except:
                         raise Exception('Could not load testsets managing menu')
@@ -247,11 +250,11 @@ class createUnit():
 
             if df['InputType'][event['index']] == 'variable':
 
-                if event['new'] not in ['','state','rate','auxiliary']:
+                if event['new'] not in ['','state','rate','auxiliary', 'exogenous']:
                     widget.edit_cell(event['index'], 'Category', event['old'])
 
                     with self._out2:
-                        print("Warning : variable category must be among the list ['state','rate','auxiliary'].")
+                        print("Warning : variable category must be among the list ['state','rate','auxiliary', 'exogenous'].")
             
             elif df['InputType'][event['index']] == 'parameter':
 
@@ -696,7 +699,7 @@ class createUnit():
         self._tab.set_title(1, 'Functions')
    
         with self._out:
-            display(wg.VBox([wg.HTML(value='<b>Model creation : unit.{}.xml<br>-> Inputs and Outputs</b>'.format(self._datas['Model name'])), self._tab, wg.HBox([self._apply, self._exit])]))
+            display(wg.VBox([wg.HTML(value='<b>Model creation : unit.{}.xml<br>-> Inputs and Outputs</b>'.format(self._datas['Model name'])), self._tab, self._init, wg.HBox([self._apply, self._exit])]))
         
         self._inouttab.on('cell_edited', self._cell_edited)
         self._inouttab.on('row_added', self._row_added)
