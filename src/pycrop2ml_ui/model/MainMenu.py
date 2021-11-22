@@ -7,6 +7,7 @@ from pycrop2ml_ui.menus.edition import editmenu
 from pycrop2ml_ui.cpackage.createpackage import createPackage
 from pycrop2ml_ui.menus.transformation import transformationmenu
 from pycrop2ml_ui.menus.display.displaymenu import displayMenu
+from pycrop2ml_ui.menus.execution import executionmenu
 
 
 
@@ -47,9 +48,10 @@ class mainMenu():
         self._edit = wg.Button(value=False,description='Model edition',disabled=False,layout=self._layout)
         self._transformation = wg.Button(value=False,description='Model transformation',disabled=False,layout=self._layout)
         self._display = wg.Button(value=False,description='Model display',disabled=False,layout=self._layout)
+        self._execution = wg.Button(value=False,description='Model execution',disabled=False,layout=self._layout)
         self._about = wg.Button(value=False,description='About',disabled=False,layout=self._layout)
 
-        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'), self._mkdir, self._create, self._edit, self._transformation, self._display, self._about], layout=wg.Layout(align_items='center'))
+        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'), self._mkdir, self._create, self._edit, self._transformation, self._display, self._execution, self._about], layout=wg.Layout(align_items='center'))
 
         self._out = wg.Output()
         self._out2 = wg.Output()
@@ -138,6 +140,21 @@ class mainMenu():
             except:
                 raise Exception('Could not load model display menu.')
 
+    def _eventExecution(self, b):
+        """
+        Execute the model menu
+        """
+        self._out.clear_output()
+        self._out2.clear_output()
+
+        with self._out:
+            try:
+                menu = executionmenu.ExecutionMenu()
+                menu.displayMenu()     
+            except:
+                raise Exception('Could not execute model .')
+
+
 
 
     def _eventAbout(self, b):
@@ -191,6 +208,7 @@ class mainMenu():
         self._edit.on_click(self._eventEdit)
         self._transformation.on_click(self._eventTransformation)
         self._display.on_click(self._eventDisplay)
+        self._execution.on_click(self._eventExecution)
         self._about.on_click(self._eventAbout)
         
 

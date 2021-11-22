@@ -19,3 +19,21 @@ def getPath():
 
     finally:
         root.destroy()
+
+def getFile():
+    """
+    Returns the selected directory path.
+    """
+    
+    root = Tk()
+    root.wm_attributes('-topmost', 1)
+    filename = filedialog.askopenfilename()
+
+    try:
+        return filename
+    
+    except:
+        sys.stderr.write('Critical error while fetching the path.')
+
+    finally:
+        root.destroy()

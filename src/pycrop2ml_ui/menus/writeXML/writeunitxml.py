@@ -141,7 +141,7 @@ class writeunitXML():
         try:
             if self._change_algo:
                 open("{0}{2}algo{2}pyx{2}{1}.pyx".format(self._datas['Path'], self._datas['Model name'], os.path.sep), 'w', encoding='utf8').close()
-            if self._change_init:
+            if self._change_init or ('init' in dir(self._df) and self._df["init"]):
                 open("{0}{2}algo{2}pyx{2}init.{1}.pyx".format(self._datas['Path'], self._datas['Model name'], os.path.sep), 'w', encoding='utf8').close()
         except IOError as ioerr:
             with self._out:
@@ -252,7 +252,6 @@ class writeunitXML():
             os.remove('{}{}unit.{}.xml'.format(self._datas['Path'], os.path.sep, self._datas['Old name']))
             os.remove('{0}{1}algo{1}pyx{1}init.{2}.pyx'.format(self._datas['Path'], os.path.sep, self._datas['Old name']))
             os.remove('{0}{1}algo{1}pyx{1}{2}.pyx'.format(self._datas['Path'], os.path.sep, self._datas['Old name']))
-
 
 
     def displayMenu(self):

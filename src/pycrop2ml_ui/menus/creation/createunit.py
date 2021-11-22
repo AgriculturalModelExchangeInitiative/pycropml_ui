@@ -159,6 +159,7 @@ class createUnit():
             
                 elif vardict:      
                     try:
+                        print(self._init.value)
                         menu = managetestset.manageTestset(self._datas, vardict, dict(), dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename']],[j for j in self._dataframeFunc['Type']])),'init':self._init.value}, iscreate=True)
                         menu.displayMenu()
                     except:
