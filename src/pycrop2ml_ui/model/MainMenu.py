@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+import os
+
 from IPython.display import display
 import ipywidgets as wg
+from io import BytesIO
+from zipfile import ZipFile
 
 from pycrop2ml_ui.menus.creation import createmenu
 from pycrop2ml_ui.menus.edition import editmenu
@@ -8,7 +12,6 @@ from pycrop2ml_ui.cpackage.createpackage import createPackage
 from pycrop2ml_ui.menus.transformation import transformationmenu
 from pycrop2ml_ui.menus.display.displaymenu import displayMenu
 from pycrop2ml_ui.menus.execution import executionmenu
-
 
 
 class mainMenu():
@@ -39,24 +42,48 @@ class mainMenu():
     mainmenu.displayMenu()       #calls displayMenu() method
     """
 
-
-    def __init__(self):
+    def __init__(self, local=False):
 
         self._layout = wg.Layout(width='300px', height='60px')
-        self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout)
-        self._create = wg.Button(value=False,description='Model creation',disabled=False,layout=self._layout)
-        self._edit = wg.Button(value=False,description='Model edition',disabled=False,layout=self._layout)
-        self._transformation = wg.Button(value=False,description='Model transformation',disabled=False,layout=self._layout)
-        self._display = wg.Button(value=False,description='Model display',disabled=False,layout=self._layout)
-        self._execution = wg.Button(value=False,description='Model execution',disabled=False,layout=self._layout)
+        self._layout_thin = wg.Layout(width='150px', height='60px')
+        self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout_thin)
+        self._create = wg.Button(value=False,description='Model creation',disabled=True,layout=self._layout)
+        self._edit = wg.Button(value=False,description='Model edition',disabled=True,layout=self._layout)
+        self._transformation = wg.Button(value=False,description='Model transformation',disabled=True,layout=self._layout)
+        self._display = wg.Button(value=False,description='Model display',disabled=True,layout=self._layout)
         self._about = wg.Button(value=False,description='About',disabled=False,layout=self._layout)
 
-        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'), self._mkdir, self._create, self._edit, self._transformation, self._display, self._execution, self._about], layout=wg.Layout(align_items='center'))
+        if local:
+            self._import = wg.FileUpload(accept='.zip', description='Package import', disabled=False, layout=self._layout_thin)
+
+            self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'),
+                                   wg.HBox([self._mkdir, self._import]),
+                                   self._create,
+                                   self._edit,
+                                   self._transformation,
+                                   self._display,
+                                   self._about
+                                   ], layout=wg.Layout(align_items='center'))
+        else:
+            self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'),
+                                   self._mkdir,
+                                   self._create,
+                                   self._edit,
+                                   self._transformation,
+                                   self._display,
+                                   self._about
+                                   ], layout=wg.Layout(align_items='center'))
+            
+
+        self._disabled = [self._create, self._edit, self._transformation, self._display]
+
+        self.pkg_directory = "./packages"
+        if os.path.isdir(self.pkg_directory) and os.listdir(self.pkg_directory):
+            for w in self._disabled:
+                w.disabled = False
 
         self._out = wg.Output()
         self._out2 = wg.Output()
-
-
 
     def _eventMkdir(self, b):
         """
@@ -68,12 +95,25 @@ class mainMenu():
 
         with self._out: 
             try:
-                menu = createPackage()
+                menu = createPackage(self.pkg_directory)
                 menu.displayMenu()
             except:
                 raise Exception('Could not load package creation menu.')
 
+    def _eventImport(self, event):
+        """
+        Import package from zip
+        """
 
+        if not os.path.isdir(self.pkg_directory):
+            os.mkdir(self.pkg_directory)
+
+        v = event.owner.value
+        with ZipFile(BytesIO(v[list(v.keys())[0]]['content'])) as zip:
+            zip.extractall(self.pkg_directory)
+
+        for w in self._disabled:
+            w.disabled = False
 
     def _eventCreate(self, b):
         """
@@ -90,8 +130,6 @@ class mainMenu():
             except:
                 raise Exception('Could not load creation menu.')
             
-
-
     def _eventEdit(self, b):
         """
         Displays model edition menu
@@ -107,8 +145,6 @@ class mainMenu():
             except:
                 raise Exception('Could not load edition menu.')
 
-
-
     def _eventTransformation(self, b):
         """
         Displays package transformation menu
@@ -123,8 +159,6 @@ class mainMenu():
                 menu.displayMenu()     
             except:
                 raise Exception('Could not load transformation menu.')
-
-
 
     def _eventDisplay(self, b):
         """
@@ -187,8 +221,6 @@ class mainMenu():
                 - mainmenu.displayMenu()       #calls displayMenu() method
                 """))
 
-
-
     def displayMenu(self):
         """
         Displays the main menu of pycrop2ml's UI.
@@ -204,6 +236,7 @@ class mainMenu():
             display(self._displayer)
         
         self._mkdir.on_click(self._eventMkdir)
+        self._import.observe(self._eventImport, names='value')
         self._create.on_click(self._eventCreate)
         self._edit.on_click(self._eventEdit)
         self._transformation.on_click(self._eventTransformation)
@@ -211,8 +244,6 @@ class mainMenu():
         self._execution.on_click(self._eventExecution)
         self._about.on_click(self._eventAbout)
         
-
-
 
 def main():
 
