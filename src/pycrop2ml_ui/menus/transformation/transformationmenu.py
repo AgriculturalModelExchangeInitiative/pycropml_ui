@@ -13,17 +13,29 @@ class transformationMenu():
     Class providing the display of the package transformation menu for pycrop2ml's user interface.
     """
 
-    def __init__(self):
+    def __init__(self, local):
 
         self._out = wg.Output()
         self._out2 = wg.Output()
+        self.local = local
 
         self._apply = wg.Button(value=False,description='Apply',disabled=False,button_style='success')
         self._cancel = wg.Button(value=False,description='Cancel',disabled=False,button_style='warning')
-        self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
-
-        self._path = wg.Textarea(value='',description='Path:',disabled=True,layout=wg.Layout(height='57px',width='400px'))
-
+        
+        if self.local == True:
+            self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
+            self._path = wg.Textarea(value='',description='Path:',disabled=True,layout=wg.Layout(height='57px',width='400px'))
+            self._pathing = wg.HBox([self._path, self._browse])
+        else:
+            self._path = wg.Dropdown(options=['None'],value='None',description='Path:',disabled=False,layout=wg.Layout(width='400px',height='35px'))
+            self.tmp = []
+            self.pkg_directory = "./packages"
+            for f in os.listdir(self.pkg_directory):
+                self.tmp.append(os.path.join(self.pkg_directory,f))
+            self._path.options = self.tmp 
+            self._path.disabled = False 
+            self._pathing = self._path 
+            
         self._java = wg.Checkbox(value=False, description='Java', disabled=False)
         self._csharp = wg.Checkbox(value=False, description='CSharp', disabled=False)
         self._fortran = wg.Checkbox(value=False, description='Fortran', disabled=False)
@@ -38,7 +50,7 @@ class transformationMenu():
         self._stics = wg.Checkbox(value=False, description='Stics', disabled=False)
         self._apsim = wg.Checkbox(value=False, description='Apsim', disabled=False)
 
-        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model transformation</b></font>'), wg.HBox([self._path, self._browse]), wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
+        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model transformation</b></font>'), self._pathing, wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
 
         self._listlanguage = []
 
@@ -91,7 +103,6 @@ class transformationMenu():
             else:
                 for lg in self._listlanguage:
                     try:
-                        print("fffff",self._path.value)
                         transpile_package(self._path.value, lg)
                     except:
                         #self._out.clear_output()
@@ -128,7 +139,7 @@ class transformationMenu():
 
         with self._out:  
             try:
-                tmp = MainMenu.mainMenu()
+                tmp = MainMenu.mainMenu(self.local)
                 tmp.displayMenu()
             except:
                 raise Exception('Could not load mainmenu.')
@@ -151,4 +162,4 @@ class transformationMenu():
 
         self._apply.on_click(self._eventApply)
         self._cancel.on_click(self._eventCancel)
-        self._browse.on_click(self._eventBrowse)
+        if self.local==True: self._browse.on_click(self._eventBrowse)

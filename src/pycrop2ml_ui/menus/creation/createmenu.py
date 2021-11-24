@@ -16,16 +16,16 @@ class createMenu():
     Class providing a display of model creation menu for pycrop2ml's user interface.
     """
 
-    def __init__(self):
+    def __init__(self, local):
 
         #outputs
         self._out = wg.Output()
         self._out2 = wg.Output()
         self._outextpkg = wg.Output()
+        self.local= local
          
         #datas
         self._layout = wg.Layout(width='400px',height='57px')
-        self._path = wg.Textarea(value='',description='Path:',disabled=True,layout=self._layout)
         self._modelName = wg.Textarea(value='',description='Name:',disabled=False,layout=self._layout)
         self._modelID = wg.Textarea(value='',description='Model ID:',disabled=False,layout=self._layout)
         self._version = wg.Textarea(value='1.0',description='Version:',disabled=False,layout=self._layout)
@@ -43,12 +43,24 @@ class createMenu():
         #buttons
         self._apply = wg.Button(value=False,description='Apply',disabled=False,button_style='success')
         self._cancel = wg.Button(value=False,description='Cancel',disabled=False,button_style='warning')
-        self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
-
-        self._header = wg.VBox([self._toggle,  self._outextpkg, wg.HBox([self._path, self._browse]), self._modelName, self._modelID, self._version, self._timestep, self._title, self._authors, self._institution, self._reference, self._abstract])
+        
+        if self.local==True:
+            self._path = wg.Textarea(value='',description='Path:',disabled=True,layout=self._layout)
+            self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
+            self._header = wg.VBox([self._toggle,  self._outextpkg, wg.HBox([self._path, self._browse]), self._modelName, self._modelID, self._version, self._timestep, self._title, self._authors, self._institution, self._reference, self._abstract])
+        else:
+            self._path = wg.Dropdown(options=['None'],value='None',description='Package:',disabled=False,layout=wg.Layout(width='400px',height='35px'))
+            self.tmp = []
+            self.pkg_directory = "./packages"
+            for f in os.listdir(self.pkg_directory):
+                self.tmp.append(os.path.join(self.pkg_directory,f))
+            self._path.options = self.tmp 
+            self._path.disabled = False
+            self._header = wg.VBox([self._toggle,  self._outextpkg, self._path, self._modelName, self._modelID, self._version, self._timestep, self._title, self._authors, self._institution, self._reference, self._abstract])
 
         #global menu displayer
         self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model creation : Header</b></font>'), self._header, wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
+        
 
         #model datas
         self._datas = dict()
@@ -82,7 +94,7 @@ class createMenu():
                 self._authors.value,self._institution.value,self._abstract.value,self._path.value,self._reference.value]):
 
             self._datas = {
-                        'Path': self._path.value+os.path.sep+'crop2ml',
+                        'Path': os.path.join(self._path.value, 'crop2ml'),
                         'Model type': self._toggle.value,
                         'Model name': self._modelName.value,
                         'Model ID': self._modelID.value,
@@ -157,7 +169,7 @@ class createMenu():
 
         with self._out:
             try:
-                tmp = MainMenu.mainMenu()
+                tmp = MainMenu.mainMenu(self.local)
                 tmp.displayMenu()
             except:
                 raise Exception('Could not load mainmenu.')
@@ -209,6 +221,6 @@ class createMenu():
         
         self._apply.on_click(self._eventApply)
         self._cancel.on_click(self._eventCancel)
-        self._browse.on_click(self._eventBrowse)
+        if self.local == True: self._browse.on_click(self._eventBrowse)
 
         self._toggle.observe(self._on_change_value, names='value')

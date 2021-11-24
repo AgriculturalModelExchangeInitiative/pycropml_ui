@@ -14,27 +14,30 @@ class createPackage():
     Class poviding an interface to create a model repository for pycrop2ml's user interface.
     """
 
-    def __init__(self, pkg_directory='./packages'):
-
+    def __init__(self, local=False):
+        
+        self.local = local
         self._layout = wg.Layout(width='400px',height='57px')
         self._projectName = wg.Textarea(value='AgriculturalModelExchangeIniative',description='Project name:',disabled=False,layout=self._layout)
         self._packageName = wg.Textarea(value='',description='Package name:',disabled=False,layout=self._layout)
         self._authors = wg.Textarea(value='',description='Authors:',disabled=False,layout=self._layout)
         self._description = wg.Textarea(value='',description='Description:',disabled=False,layout=self._layout)
         self._license = wg.Dropdown(value='',options=['', 'MIT', 'BSD-3-Clause'],description='License:',disabled=False,layout=wg.Layout(width='400px'))
-
-        # self._inputPath = wg.Textarea(value='',description='Path:',disabled=True,layout=self._layout)
-        # self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
-        self.pkg_directory = pkg_directory
-
-        if not os.path.isdir(self.pkg_directory):
-            os.mkdir(self.pkg_directory)
-
         self._create = wg.Button(value=False,description='Create',disabled=False,button_style='success')
         self._cancel = wg.Button(value=False,description='Cancel',disabled=False,button_style='warning')
-
-        # self._core = wg.VBox([self._projectName, self._packageName, wg.HBox([self._inputPath, self._browse]), self._authors, self._description, self._license])
-        self._core = wg.VBox([self._projectName, self._packageName, self._authors, self._description, self._license])
+        self.dirpath = None
+        if self.local==False: 
+            self.pkg_directory = './packages'
+            if not os.path.isdir(self.pkg_directory):
+                os.mkdir(self.pkg_directory)
+            self._core = wg.VBox([self._projectName, self._packageName, self._authors, self._description, self._license])
+            self.dirpath = self.pkg_directory
+        
+        else:
+            self._inputPath = wg.Textarea(value='',description='Path:',disabled=True,layout=self._layout)
+            self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
+            self._core = wg.VBox([self._projectName, self._packageName, wg.HBox([self._inputPath, self._browse]), self._authors, self._description, self._license])
+            self.dirpath = self._inputPath.value
 
         self._displayer = wg.VBox([wg.HTML(value='<b><font size="5">Package creation</font></b>'), self._core, wg.HBox([self._create, self._cancel])], layout=wg.Layout(align_items='center'))
 
@@ -51,9 +54,9 @@ class createPackage():
 
         self._out2.clear_output()
 
-        if all([self._projectName.value,self._packageName.value,self._authors.value,self._description.value,self._license.value]):
+        if all([self._projectName.value,self._packageName.value,self._authors.value,self._description.value,self._license.value, self.dirpath]):
             with self._out2:
-                if(os.path.exists(os.path.join(self.pkg_directory, self._packageName.value))):
+                if(os.path.exists(os.path.join(self.dirpath, self._packageName.value))):
                     print("This package already exists.")
                 else:
                     self._create.disabled = True
@@ -67,7 +70,7 @@ class createPackage():
                                                     'author_name':self._authors.value,
                                                     'description':self._description.value,
                                                     'open_source_license':self._license.value},
-                                     output_dir=self.pkg_directory)
+                                     output_dir=self.dirpath)
                     except:
                         raise Exception("Could not create the package.")   
                     finally:
@@ -83,8 +86,9 @@ class createPackage():
                     print("\t- project name")
                 if(not self._packageName.value):
                     print("\t- package name")
-                # if(not self._inputPath.value):
-                #     print("\t- path")
+                if self.local:
+                    if(not self.dirpath):
+                        print("\t- path")
                 if(not self._authors.value):
                     print("\t- authors name")
                 if(not self._description.value):
@@ -109,19 +113,18 @@ class createPackage():
 
         with self._out:
             try:
-                tmp = MainMenu.mainMenu()
+                tmp = MainMenu.mainMenu(self.local)
                 tmp.displayMenu()
             except:
                 raise Exception('Could not load mainMenu.')
 
-    # def _eventBrowse(self, b):
-    #     """
-    #     Handles browse button on_click event
-    #     """
-    #
-    #     self._out2.clear_output()
-    #     self._inputPath.value = getPath()
-
+    def _eventBrowse(self, b):
+         """
+         Handles browse button on_click event
+         """
+         self._out2.clear_output()
+         self._inputPath.value = getPath()
+         self.dirpath = self._inputPath.value
 
 
     def displayMenu(self):
@@ -140,4 +143,4 @@ class createPackage():
 
         self._create.on_click(self._eventCreate)
         self._cancel.on_click(self._eventCancel)
-        # self._browse.on_click(self._eventBrowse)
+        if self.local: self._browse.on_click(self._eventBrowse)

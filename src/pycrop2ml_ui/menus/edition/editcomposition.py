@@ -24,7 +24,9 @@ class editComposition():
                      }
     """
 
-    def __init__(self, data):
+    def __init__(self, data, local):
+        
+        self.local=local
 
         #outputs
         self._out = wg.Output()
@@ -322,7 +324,7 @@ class editComposition():
         self._out2.clear_output()
 
         try:
-            tmp = editmenu.editMenu()
+            tmp = editmenu.editMenu(self.local)
             tmp.displayMenu()
         except:
             raise Exception('Could not load edition menu.')
