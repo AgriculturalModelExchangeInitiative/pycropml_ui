@@ -42,46 +42,48 @@ class mainMenu():
     mainmenu.displayMenu()       #calls displayMenu() method
     """
 
-    def __init__(self, local=False):
+    def __init__(self, local=True):
 
+        self.local = local
         self._layout = wg.Layout(width='300px', height='60px')
         self._layout_thin = wg.Layout(width='150px', height='60px')
-        self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout_thin)
-        self._create = wg.Button(value=False,description='Model creation',disabled=True,layout=self._layout)
-        self._edit = wg.Button(value=False,description='Model edition',disabled=True,layout=self._layout)
-        self._transformation = wg.Button(value=False,description='Model transformation',disabled=True,layout=self._layout)
-        self._display = wg.Button(value=False,description='Model display',disabled=True,layout=self._layout)
+        self._create = wg.Button(value=False,description='Model creation',disabled=False,layout=self._layout)
+        self._edit = wg.Button(value=False,description='Model edition',disabled=False,layout=self._layout)
+        self._transformation = wg.Button(value=False,description='Model transformation',disabled=False,layout=self._layout)
+        self._execution = wg.Button(value=False,description='Model execution',disabled=False,layout=self._layout)
+        self._display = wg.Button(value=False,description='Model display',disabled=False,layout=self._layout)
         self._about = wg.Button(value=False,description='About',disabled=False,layout=self._layout)
 
-        if local:
+        if self.local==False:
             self._import = wg.FileUpload(accept='.zip', description='Package import', disabled=False, layout=self._layout_thin)
-
+            self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout_thin)
+            self._disabled = [self._create, self._edit, self._transformation, self._execution, self._display]
+            self.pkg_directory = "./packages"
+            if not os.path.isdir(self.pkg_directory) or not os.listdir(self.pkg_directory):
+                for w in self._disabled:
+                    w.disabled = True
             self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'),
                                    wg.HBox([self._mkdir, self._import]),
                                    self._create,
                                    self._edit,
                                    self._transformation,
+                                   self._execution,
                                    self._display,
                                    self._about
                                    ], layout=wg.Layout(align_items='center'))
+
         else:
+            self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout)
             self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'),
                                    self._mkdir,
                                    self._create,
                                    self._edit,
                                    self._transformation,
+                                   self._execution,
                                    self._display,
                                    self._about
                                    ], layout=wg.Layout(align_items='center'))
             
-
-        self._disabled = [self._create, self._edit, self._transformation, self._display]
-
-        self.pkg_directory = "./packages"
-        if os.path.isdir(self.pkg_directory) and os.listdir(self.pkg_directory):
-            for w in self._disabled:
-                w.disabled = False
-
         self._out = wg.Output()
         self._out2 = wg.Output()
 
@@ -95,7 +97,7 @@ class mainMenu():
 
         with self._out: 
             try:
-                menu = createPackage(self.pkg_directory)
+                menu = createPackage(self.local)
                 menu.displayMenu()
             except:
                 raise Exception('Could not load package creation menu.')
@@ -125,7 +127,7 @@ class mainMenu():
 
         with self._out:
             try:
-                createWg = createmenu.createMenu()
+                createWg = createmenu.createMenu(self.local)
                 createWg.displayMenu()          
             except:
                 raise Exception('Could not load creation menu.')
@@ -140,7 +142,7 @@ class mainMenu():
 
         with self._out:
             try:
-                editWg = editmenu.editMenu()
+                editWg = editmenu.editMenu(self.local)
                 editWg.displayMenu()          
             except:
                 raise Exception('Could not load edition menu.')
@@ -155,7 +157,7 @@ class mainMenu():
 
         with self._out:
             try:
-                menu = transformationmenu.transformationMenu()
+                menu = transformationmenu.transformationMenu(self.local)
                 menu.displayMenu()     
             except:
                 raise Exception('Could not load transformation menu.')
@@ -169,7 +171,7 @@ class mainMenu():
 
         with self._out:
             try:
-                menu = displayMenu()
+                menu = displayMenu(self.local)
                 menu.displayMenu()     
             except:
                 raise Exception('Could not load model display menu.')
@@ -183,7 +185,7 @@ class mainMenu():
 
         with self._out:
             try:
-                menu = executionmenu.ExecutionMenu()
+                menu = executionmenu.ExecutionMenu(self.local)
                 menu.displayMenu()     
             except:
                 raise Exception('Could not execute model .')
@@ -236,7 +238,8 @@ class mainMenu():
             display(self._displayer)
         
         self._mkdir.on_click(self._eventMkdir)
-        self._import.observe(self._eventImport, names='value')
+        if self.local==False: 
+            self._import.observe(self._eventImport, names='value')
         self._create.on_click(self._eventCreate)
         self._edit.on_click(self._eventEdit)
         self._transformation.on_click(self._eventTransformation)
@@ -245,8 +248,8 @@ class mainMenu():
         self._about.on_click(self._eventAbout)
         
 
-def main():
+def main(local=True):
 
-    output = mainMenu()
+    output = mainMenu(local)
     output.displayMenu()
 
