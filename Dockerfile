@@ -20,21 +20,18 @@ USER ${USER}
 
 RUN conda install -y python"<3.8"
 RUN conda install -y jupyterlab=2.3.2
-RUN pip install cookiecutter
 
 # Pycrop2ML INSTALLATION
-RUN git clone https://github.com/brichet/PyCrop2ML.git
+RUN git clone https://github.com/AgriculturalModelExchangeInitiative/PyCrop2ML.git
 WORKDIR PyCrop2ML
-RUN git switch fix/syntax
 RUN pip install -r requirements.txt
 RUN pip install .
 WORKDIR ${HOME}
 RUN rm -rf PyCrop2ML
 
 # Pycrop2ml_ui installation
-RUN git clone https://github.com/AgriculturalModelExchangeInitiative/Pycrop2ml_ui.git
+COPY --chown=${UID} . Pycrop2ml_ui
 WORKDIR Pycrop2ml_ui
-RUN git switch feature/upload_package
 RUN pip install -r requirements.txt
 RUN pip install .
 WORKDIR ${HOME}

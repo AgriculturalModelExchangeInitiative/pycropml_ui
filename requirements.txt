@@ -35,5 +35,6 @@ IPython
 qgrid
 pandas==0.24.2
 cookiecutter
-
+ipyfilechooser
+matplotlib
 
