@@ -20,7 +20,7 @@ class transformationMenu():
         self.local = local
 
         self._apply = wg.Button(value=False,description='Apply',disabled=False,button_style='success')
-        self._cancel = wg.Button(value=False,description='Cancel',disabled=False,button_style='warning')
+        self._cancel = wg.Button(value=False,description='Quit',disabled=False,button_style='warning')
         
         if self.local == True:
             self._browse = wg.Button(value=False,description='Browse',disabled=False,button_style='primary')
@@ -111,6 +111,9 @@ class transformationMenu():
 
                 self._out.clear_output()
                 self._out2.clear_output()
+                
+        with self._out:
+            display(self._displayer)
 
 
 
