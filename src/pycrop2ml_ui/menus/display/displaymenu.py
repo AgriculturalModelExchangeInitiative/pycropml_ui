@@ -29,7 +29,7 @@ class displayMenu():
         
         else:
             self._modelPath = wg.Dropdown(options=['None'],value='None',description='Model path:',disabled=False,layout=wg.Layout(width='400px',height='35px'))
-            self.tmp = []
+            self.tmp = [""]
             self.pkg_directory = "./packages"
             for f in os.listdir(self.pkg_directory):
                 self.tmp.append(os.path.join(self.pkg_directory,f))
