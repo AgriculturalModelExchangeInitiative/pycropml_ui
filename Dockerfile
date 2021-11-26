@@ -26,6 +26,7 @@ RUN git clone https://github.com/AgriculturalModelExchangeInitiative/PyCrop2ML.g
 WORKDIR PyCrop2ML
 RUN pip install -r requirements.txt
 RUN pip install .
+RUN conda install -c conda-forge graphviz
 WORKDIR ${HOME}
 RUN rm -rf PyCrop2ML
 
