@@ -63,7 +63,7 @@ class ExecutionMenu():
             self._pathing_data = wg.VBox([self._import,self._visualization], layout = wg.Layout(width='150',height='57px') )
             self._saveloadpa = self._save_params
             self._saveloadcon = self._save_connection
-            self.tmp = []
+            self.tmp = [""]
             self.pkg_directory = "./packages"
             for f in os.listdir(self.pkg_directory):
                 self.tmp.append(os.path.join(self.pkg_directory,f))
