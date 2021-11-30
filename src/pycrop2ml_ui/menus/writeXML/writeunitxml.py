@@ -50,7 +50,7 @@ class writeunitXML():
     """
 
 
-    def __init__(self, datas, df, paramsetdict, testsetdict, iscreate=True):
+    def __init__(self, datas, df, paramsetdict, testsetdict, iscreate=True, local=False):
         
         self._out = wg.Output()
         self._datas = datas
@@ -60,6 +60,7 @@ class writeunitXML():
         self._iscreate = iscreate
         self._change_algo = True
         self._change_init = False
+        self.local = local
         if "unit.modelunit.xml" in os.listdir(self._datas['Path']) : os.remove(os.path.join(self._datas['Path'],"unit.modelunit.xml"))
         if "composition.modelcomposite.xml" in os.listdir(self._datas['Path']) : os.remove(os.path.join(self._datas['Path'],"composition.modelcomposite.xml"))
 
@@ -278,8 +279,16 @@ class writeunitXML():
                 self._change_init = True if _toggle_init.value == 'Yes' else False
                 self._change_algo = True if _toggle_algo.value == 'Yes' else False
                 self._write()
-            
+                self._out.clear_output()
+                with self._out:
+                    from pycrop2ml_ui.model import MainMenu
+                    tmp = MainMenu.mainMenu(self.local)
+                    tmp.displayMenu()
             _apply.on_click(_eventApply)
 
         else:
             self._write()
+            with self._out:
+                from pycrop2ml_ui.model import MainMenu
+                tmp = MainMenu.mainMenu(self.local)
+                tmp.displayMenu()

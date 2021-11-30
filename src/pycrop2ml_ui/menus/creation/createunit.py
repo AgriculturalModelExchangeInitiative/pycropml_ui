@@ -31,7 +31,7 @@ class createUnit():
                      }
     """
 
-    def __init__(self, data):
+    def __init__(self, data, local):
 
         #buttons
         self._apply = wg.Button(value=False,description='Apply',disabled=False,button_style='success')
@@ -41,6 +41,7 @@ class createUnit():
         #outputs
         self._out = wg.Output()
         self._out2 = wg.Output()
+        self.local = local
 
         #dataframes and QGRID
         self._dataframeInputs = pandas.DataFrame(data={
@@ -159,8 +160,7 @@ class createUnit():
             
                 elif vardict:      
                     try:
-                        print(self._init.value)
-                        menu = managetestset.manageTestset(self._datas, vardict, dict(), dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename']],[j for j in self._dataframeFunc['Type']])),'init':self._init.value}, iscreate=True)
+                        menu = managetestset.manageTestset(self._datas, vardict, dict(), dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename']],[j for j in self._dataframeFunc['Type']])),'init':self._init.value}, True, self.local)
                         menu.displayMenu()
                     except:
                         raise Exception('Could not load testsets managing menu')
@@ -186,6 +186,10 @@ class createUnit():
 
         self._out.clear_output()
         self._out2.clear_output()
+        with self._out:
+            from pycrop2ml_ui.model import MainMenu
+            tmp = MainMenu.mainMenu(self.local)
+            tmp.displayMenu()
 
 
 
