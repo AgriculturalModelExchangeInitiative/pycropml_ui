@@ -251,7 +251,7 @@ class editUnit():
             
             else:
                 try:
-                    menu = managetestset.manageTestset(self._datas, self._vardict, self._testsetdict, self._paramsetdict, self._df, iscreate=False)
+                    menu = managetestset.manageTestset(self._datas, self._vardict, self._testsetdict, self._paramsetdict, self._df, False, self.local)
                     menu.displayMenu()
                 except:
                     raise Exception('Could not load testsets managing menu.')

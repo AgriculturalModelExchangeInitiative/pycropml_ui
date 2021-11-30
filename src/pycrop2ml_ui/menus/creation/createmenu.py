@@ -113,7 +113,7 @@ class createMenu():
                 with self._out:
                     if self._datas['Model type'] == 'unit':
                         try:   
-                            unit = createunit.createUnit(self._datas)
+                            unit = createunit.createUnit(self._datas, self.local)
                             unit.displayMenu()
                         except:                      
                             raise Exception('Could not load unit creation model menu.')

@@ -57,13 +57,14 @@ class manageTestset():
         - iscreate : bool
     """
 
-    def __init__(self, datas, vardict, testsetdict, paramsetdict, df, iscreate=True):
+    def __init__(self, datas, vardict, testsetdict, paramsetdict, df, iscreate=True, local=True):
 
         #OUTPUTS
         self._out = wg.Output()
         self._out_testset = wg.Output()
         self._out_test = wg.Output()
         self._out3 = wg.Output()
+        self.local = local
 
         #BUTTONS
         self._editTestset = wg.Button(value=False, description='Edit', disabled=True, button_style='primary')
@@ -355,7 +356,6 @@ class manageTestset():
                     self._apply.disabled = False
                     self._out_test.clear_output()
 
-
             self._currentQgrid.on('cell_edited', self._cell_edited)
             apply.on_click(eventApply)
 
@@ -513,7 +513,10 @@ class manageTestset():
             self._deleteTest.disabled = False
             self._testSelecter.disabled = False
             self._apply.disabled = False
-        
+            with self._out:
+                from pycrop2ml_ui.model import MainMenu
+                tmp = MainMenu.mainMenu(self.local)
+                tmp.displayMenu() 
         apply.on_click(eventApply)
         cancel.on_click(eventCancel)
 
@@ -718,7 +721,7 @@ class manageTestset():
 
             with self._out:
                 try:
-                    xml = writeunitXML(self._datas, self._df, self._paramsetdict, self._testsetdict, self._iscreate)
+                    xml = writeunitXML(self._datas, self._df, self._paramsetdict, self._testsetdict, self._iscreate, self.local)
                     xml.displayMenu()
                 except:
                     raise Exception('Could not load writeunitxml class.')
@@ -741,8 +744,10 @@ class manageTestset():
         self._out_test.clear_output()
         self._out_testset.clear_output()
         self._out3.clear_output()
-
-
+        with self._out:
+            from pycrop2ml_ui.model import MainMenu
+            tmp = MainMenu.mainMenu(self.local)
+            tmp.displayMenu()
             
     def displayMenu(self):
         """
