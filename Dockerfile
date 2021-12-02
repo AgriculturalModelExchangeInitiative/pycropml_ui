@@ -175,3 +175,4 @@ USER ${USER}
 WORKDIR ${HOME}/work/
 
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
+
