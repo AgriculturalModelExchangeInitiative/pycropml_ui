@@ -542,7 +542,7 @@ class editUnit():
                         else:
                             widget.edit_cell(event['index'], 'Default', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if any([df['Min'][event['index']] and (float(df['Min'][event['index']]) > float(event['new'])),
                                 df['Max'][event['index']] and (float(df['Max'][event['index']]) < float(event['new']))
                                 ]):
@@ -645,7 +645,7 @@ class editUnit():
                         else:
                             widget.edit_cell(event['index'], 'Min', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if df['Default'][event['index']] and (float(df['Default'][event['index']]) < float(event['new'])):
                             widget.edit_cell(event['index'], 'Min', event['old'])
 
@@ -718,7 +718,7 @@ class editUnit():
 
                         widget.edit_cell(event['index'], 'Max', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if df['Default'][event['index']] and (float(df['Default'][event['index']]) > float(event['new'])):
                             widget.edit_cell(event['index'], 'Max', event['old'])
 
@@ -837,7 +837,7 @@ class editUnit():
                         else:
                             widget.edit_cell(event['index'], 'Min', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if df['Max'][event['index']] and (float(df['Max'][event['index']]) < float(event['new'])):
                             widget.edit_cell(event['index'], 'Min', event['old'])
 
@@ -892,7 +892,7 @@ class editUnit():
                         else:
                             widget.edit_cell(event['index'], 'Max', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if df['Min'][event['index']] and (float(event['new']) < float(df['Min'][event['index']])):
                             widget.edit_cell(event['index'], 'Max', event['old'])
 
