@@ -204,10 +204,10 @@ class writeunitXML():
             for i,j in self._df['Functions'].items():
                 buffer += '\n\t<Function name="{}" language="Cyml" filename="algo/pyx/{}.pyx" type="{}" description="" />'.format(i.split('.')[0].split('/')[-1], i, j)
         
-        buffer += '\n\n\t<Algorithm language="Cyml" platform="" filename="algo/pyx/{}.pyx" />'.format(self._datas['Model name'])
+        buffer += '\n\n\t<Algorithm language="Cyml" platform="" filename="algo/pyx/{}.pyx" />'.format(self._datas['Model name'].lower())
         
         if ('init' in dir(self._df) and self._df['init']) or (self._change_init):
-            buffer += '\n\n\t<Initialization name="init.{0}" language="Cyml" filename="algo/pyx/init.{0}.pyx" description="" />'.format(self._datas['Model name'])
+            buffer += '\n\n\t<Initialization name="init.{0}" language="Cyml" filename="algo/pyx/init.{0}.pyx" description="" />'.format(self._datas['Model name'].lower())
         buffer += '\n\n\t<Parametersets>'
 
         for name, args in self._paramsetdict.items():
@@ -251,8 +251,8 @@ class writeunitXML():
 
         if not self._iscreate and self._datas['Model name'] != self._datas['Old name']:
             os.remove('{}{}unit.{}.xml'.format(self._datas['Path'], os.path.sep, self._datas['Old name']))
-            os.remove('{0}{1}algo{1}pyx{1}init.{2}.pyx'.format(self._datas['Path'], os.path.sep, self._datas['Old name']))
-            os.remove('{0}{1}algo{1}pyx{1}{2}.pyx'.format(self._datas['Path'], os.path.sep, self._datas['Old name']))
+            #os.remove('{0}{1}algo{1}pyx{1}init.{2}.pyx'.format(self._datas['Path'], os.path.sep, self._datas['Old name'].lower()))
+            os.remove('{0}{1}algo{1}pyx{1}{2}.pyx'.format(self._datas['Path'], os.path.sep, self._datas['Old name'].lower()))
 
 
     def displayMenu(self):
