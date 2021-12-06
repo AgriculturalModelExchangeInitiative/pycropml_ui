@@ -385,7 +385,7 @@ class createUnit():
                         else:
                             widget.edit_cell(event['index'], 'Default', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if any([df['Min'][event['index']] and (float(df['Min'][event['index']]) > float(event['new'])),
                                 df['Max'][event['index']] and (float(df['Max'][event['index']]) < float(event['new']))
                                 ]):
@@ -398,7 +398,7 @@ class createUnit():
                         widget.edit_cell(event['index'], 'Default', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'3 Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
 
 
                 elif df['DataType'][event['index']] in ['DOUBLELIST','DOUBLEARRAY']:
@@ -488,7 +488,7 @@ class createUnit():
                         else:
                             widget.edit_cell(event['index'], 'Min', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if df['Default'][event['index']] and (float(df['Default'][event['index']]) < float(event['new'])):
                             widget.edit_cell(event['index'], 'Min', event['old'])
 
@@ -505,7 +505,7 @@ class createUnit():
                         widget.edit_cell(event['index'], 'Min', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'1 Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
                     
 
                 else:
@@ -562,7 +562,7 @@ class createUnit():
                         else:
                             widget.edit_cell(event['index'], 'Max', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if df['Default'][event['index']] and (float(df['Default'][event['index']]) > float(event['new'])):
                             widget.edit_cell(event['index'], 'Max', event['old'])
 
@@ -579,7 +579,7 @@ class createUnit():
                         widget.edit_cell(event['index'], 'Max', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'2 Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
                     
 
                 else:
