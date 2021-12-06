@@ -243,7 +243,7 @@ class manageParamset():
                         else:
                             widget.edit_cell(event['index'], 'Value', event['new']+'0')
                         
-                    elif re.search(r'^-?\d+\.\d+$', event['new']):
+                    elif re.search(r'^-?\d+\.\d+$', event['new']) or re.search(r'^-?\d+(E-?)?\d+$', event['new']) or re.search(r'^-?\d+\.\d+(E-?)\d+$', event['new']):
                         if any([df['Min'][event['index']] and (float(df['Min'][event['index']]) > float(event['new'])),
                                 df['Max'][event['index']] and (float(df['Max'][event['index']]) < float(event['new']))
                                 ]):

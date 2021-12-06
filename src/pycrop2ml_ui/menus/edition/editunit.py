@@ -555,7 +555,7 @@ class editUnit():
                         widget.edit_cell(event['index'], 'Default', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'1Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
 
 
                 elif df['DataType'][event['index']] in ['DOUBLELIST','DOUBLEARRAY']:
@@ -662,7 +662,7 @@ class editUnit():
                         widget.edit_cell(event['index'], 'Min', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'2Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
                     
 
                 else:
@@ -735,7 +735,7 @@ class editUnit():
                         widget.edit_cell(event['index'], 'Max', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'3Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
                     
 
                 else:
@@ -848,7 +848,7 @@ class editUnit():
                         widget.edit_cell(event['index'], 'Min', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'4Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
                     
 
                 else:
@@ -903,7 +903,7 @@ class editUnit():
                         widget.edit_cell(event['index'], 'Max', event['old'])
 
                         with self._out2:
-                            print(r'Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
+                            print(r'5Error : bad DOUBLE format -> use -?[0-9]+.[0-9]* .')
                     
 
                 else:
