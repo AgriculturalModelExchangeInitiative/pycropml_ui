@@ -167,7 +167,6 @@ RUN dotnet interactive jupyter install
 ENV DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=false
 
 USER root
-
 RUN rm -rf /var/lib/apt/lists/*
 
 USER ${USER}
@@ -176,5 +175,3 @@ USER ${USER}
 WORKDIR ${HOME}/work/
 
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
-
-
