@@ -244,7 +244,7 @@ class editUnit():
         with self._out:
             if self._paramdict:
                 try:
-                    menu = manageparamset.manageParamset(self._datas, self._paramdict, self._paramsetdict, self._df, self._vardict, self._testsetdict, iscreate=False)
+                    menu = manageparamset.manageParamset(self._datas, self._paramdict, self._paramsetdict, self._df, self._vardict, self._testsetdict, False, self.local)
                     menu.displayMenu()
                 except:
                     raise Exception('Could not load parametersets managing menu')
