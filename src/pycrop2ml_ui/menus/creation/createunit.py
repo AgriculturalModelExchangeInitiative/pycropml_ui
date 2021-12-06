@@ -153,7 +153,7 @@ class createUnit():
             with self._out:
                 if paramdict:
                     try:
-                        menu = manageparamset.manageParamset(self._datas, paramdict, dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename'] if i],[j for j in self._dataframeFunc['Type'] if j])), 'init':self._init.value}, vardict, dict(), iscreate=True)
+                        menu = manageparamset.manageParamset(self._datas, paramdict, dict(), {'Inputs': self._dataframeInputs, 'Functions': dict(zip([i for i in self._dataframeFunc['Filename'] if i],[j for j in self._dataframeFunc['Type'] if j])), 'init':self._init.value}, vardict, dict(), True, self.local)
                         menu.displayMenu()
                     except:
                         raise Exception('Could not load parametersets managing menu')

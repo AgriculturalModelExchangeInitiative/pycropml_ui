@@ -58,7 +58,7 @@ class manageParamset():
         - iscreate : bool
     """
 
-    def __init__(self, datas, paramdict, paramsetdict, df, vardict, testsetdict, iscreate=True):
+    def __init__(self, datas, paramdict, paramsetdict, df, vardict, testsetdict, iscreate=True, local=True):
     
         self._out = wg.Output()
         self._out2 = wg.Output()
@@ -73,6 +73,7 @@ class manageParamset():
         self._iscreate = iscreate
         self._setlist = ['']
         self._df = df
+        self.local = local
 
         self._paramselecter = wg.Dropdown(options=[''],value='',description='ParameterSet:',disabled=False)
         self._description = wg.Textarea(value='',description='Description:',disabled=False)
@@ -347,7 +348,7 @@ class manageParamset():
 
             with self._out:
                 try:
-                    menu = managetestset.manageTestset(self._datas, self._vardict, self._testsetdict, self._paramsetdict, self._df, self._iscreate)
+                    menu = managetestset.manageTestset(self._datas, self._vardict, self._testsetdict, self._paramsetdict, self._df, self._iscreate, self.local)
                     menu.displayMenu()
                 except:
                     raise Exception('Could not load testset unit model edition menu.')
