@@ -11,6 +11,7 @@ from tkinter.filedialog import askopenfilename
 from pycropml.topology import Topology
 from ipyfilechooser import FileChooser
 from . import visualization  
+from pycrop2ml_ui.model import MainMenu
 
 
 
@@ -31,6 +32,7 @@ class ExecutionMenu():
         self._visualization = wg.Button(value=False,description='Visualization',disabled=False,button_style='primary')
         self._selecter = wg.Dropdown(options=['None'],value='None',description='Model:',disabled=True,layout=wg.Layout(width='400px',height='35px'))
         self._connection = wg.Button(value=False,description='Map data to model',disabled=False, button_style='primary')
+        self._cancel = wg.Button(value=False, description='Exit', disabled=False, button_style='warning')
         self._save_connection = wg.Button(value=False,description='Save',disabled=False,button_style='warning')
         self._save_params = wg.Button(value=False,description='Save',disabled=False,button_style='warning')
 
@@ -98,7 +100,7 @@ class ExecutionMenu():
         #global displayer
         self._disp_model = wg.HBox([wg.HTML(value='<font size="5"><b>Model selection </b></font>', layout=wg.Layout(width='190px')), self._pathing])
         self._disp_data = wg.HBox([wg.HTML(value='<font size="5"><b>Model data </b></font>', layout=wg.Layout(width='190px')), wg.HBox([self._dataPath, self._pathing_data])])
-        self._displayer = wg.VBox([self._disp_model, self._disp_data,self._connection, wg.HBox([wg.HTML(value='<font size="5"><b> </b></font>', layout=wg.Layout(width='110px'))])]) # ,self._edit, self._cancel
+        self._displayer = wg.VBox([self._disp_model, self._disp_data,wg.HBox([self._connection, self._cancel]), wg.HBox([wg.HTML(value='<font size="5"><b> </b></font>', layout=wg.Layout(width='110px'))])]) # ,self._edit, self._cancel
         
         self._paths = dict()
         
@@ -423,6 +425,21 @@ class ExecutionMenu():
             self._dataPath.disabled = False
             h = datafiles
 
+    def _eventCancel(self, b):
+        """
+        Handles cancel button on_click event
+        """
+
+        self._out.clear_output()
+        self._out2.clear_output()
+        
+        with self._out:
+            try:
+                tmp = MainMenu.mainMenu(self.local)
+                tmp.displayMenu()
+            except:
+                raise Exception('Could not load mainMenu.')
+
     def displayMenu(self):
         """
         Displays the model edition menu of pyrcop2ml's UI.
@@ -442,6 +459,7 @@ class ExecutionMenu():
         self._connection.on_click(self._eventConnection)
         if self.local==False: 
             self._import.observe(self._eventImport, names='value')
+        self._cancel.on_click(self._eventCancel)
     
 
 
