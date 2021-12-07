@@ -14,6 +14,7 @@ ENV PATH="${CONDA_DIR}/bin:${PATH}" \
     HOME="/home/${USER}"
 
 USER root
+
 RUN apt-get update
 
 USER ${USER}
