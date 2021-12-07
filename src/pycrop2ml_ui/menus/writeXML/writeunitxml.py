@@ -94,11 +94,11 @@ class writeunitXML():
         """
 
         try:
-            init = open("{0}{2}algo{2}pyx{2}init.{1}.pyx".format(self._datas['Path'], self._datas['Model name'], os.path.sep), 'w', encoding='utf8')
+            init = open("{0}{2}algo{2}pyx{2}init.{1}.pyx".format(self._datas['Path'], self._datas['Model name'].lower(), os.path.sep), 'w', encoding='utf8')
 
         except IOError as ioerr:
             with self._out:
-                raise Exception("Initialization file init.{}.pyx could not be created. {}".format(self._datas['Model name'], ioerr))
+                raise Exception("Initialization file init.{}.pyx could not be created. {}".format(self._datas['Model name'].lower(), ioerr))
 
         else:     
             doc = self._getDoc(init)
@@ -117,11 +117,11 @@ class writeunitXML():
         """
 
         try:
-            algo = open("{0}{2}algo{2}pyx{2}{1}.pyx".format(self._datas['Path'], self._datas['Model name'], os.path.sep), 'w', encoding='utf8')
+            algo = open("{0}{2}algo{2}pyx{2}{1}.pyx".format(self._datas['Path'], self._datas['Model name'].lower(), os.path.sep), 'w', encoding='utf8')
 
         except IOError as ioerr:
             with self._out:
-                raise Exception("Algorithm file {}.pyx could not be created. {}".format(self._datas['Model name'], ioerr))
+                raise Exception("Algorithm file {}.pyx could not be created. {}".format(self._datas['Model name'].lower(), ioerr))
 
         else:
             doc = self._getDoc(algo)
