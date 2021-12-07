@@ -12,6 +12,7 @@ from pycrop2ml_ui.cpackage.createpackage import createPackage
 from pycrop2ml_ui.menus.transformation import transformationmenu
 from pycrop2ml_ui.menus.display.displaymenu import displayMenu
 from pycrop2ml_ui.menus.execution import executionmenu
+from pycrop2ml_ui.menus.download import downloadmenu
 
 
 class mainMenu():
@@ -52,37 +53,40 @@ class mainMenu():
         self._transformation = wg.Button(value=False,description='Model transformation',disabled=False,layout=self._layout)
         self._execution = wg.Button(value=False,description='Model execution',disabled=False,layout=self._layout)
         self._display = wg.Button(value=False,description='Model display',disabled=False,layout=self._layout)
+        self._download = wg.Button(value=False, description='Model download', disabled=False, layout=self._layout)
         self._about = wg.Button(value=False,description='About',disabled=False,layout=self._layout)
 
         if self.local==False:
             self._import = wg.FileUpload(accept='.zip', description='Package import', disabled=False, layout=self._layout_thin)
             self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout_thin)
-            self._disabled = [self._create, self._edit, self._transformation, self._execution, self._display]
+            self._disabled = [self._create, self._edit, self._transformation, self._execution, self._display, self._download]
             self.pkg_directory = "./packages"
             if not os.path.isdir(self.pkg_directory) or not os.listdir(self.pkg_directory):
                 for w in self._disabled:
                     w.disabled = True
             self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'),
-                                   wg.HBox([self._mkdir, self._import]),
-                                   self._create,
-                                   self._edit,
-                                   self._transformation,
-                                   self._execution,
-                                   self._display,
-                                   self._about
-                                   ], layout=wg.Layout(align_items='center'))
+                                       wg.HBox([self._mkdir, self._import]),
+                                       self._create,
+                                       self._edit,
+                                       self._transformation,
+                                       self._execution,
+                                       self._display,
+                                       self._download,
+                                       self._about
+                                       ], layout=wg.Layout(align_items='center'))
 
         else:
             self._mkdir = wg.Button(value=False,description='Package creation',disabled=False,layout=self._layout)
             self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model manager for Pycrop2ml</b></font>'),
-                                   self._mkdir,
-                                   self._create,
-                                   self._edit,
-                                   self._transformation,
-                                   self._execution,
-                                   self._display,
-                                   self._about
-                                   ], layout=wg.Layout(align_items='center'))
+                                       self._mkdir,
+                                       self._create,
+                                       self._edit,
+                                       self._transformation,
+                                       self._execution,
+                                       self._display,
+                                       self._download,
+                                       self._about
+                                       ], layout=wg.Layout(align_items='center'))
             
         self._out = wg.Output()
         self._out2 = wg.Output()
@@ -190,8 +194,17 @@ class mainMenu():
             except:
                 raise Exception('Could not execute model .')
 
+    def _eventDownload(self, b):
 
+        self._out.clear_output()
+        self._out2.clear_output()
 
+        with self._out:
+            try:
+                menu = downloadmenu.DownloadMenu(self.local)
+                menu.displayMenu()
+            except:
+                raise Exception('Could not open download menu.')
 
     def _eventAbout(self, b):
         """
@@ -245,6 +258,7 @@ class mainMenu():
         self._transformation.on_click(self._eventTransformation)
         self._display.on_click(self._eventDisplay)
         self._execution.on_click(self._eventExecution)
+        self._download.on_click(self._eventDownload)
         self._about.on_click(self._eventAbout)
         
 
