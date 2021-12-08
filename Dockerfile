@@ -22,6 +22,7 @@ USER ${USER}
 RUN conda install -y python"<3.8"
 RUN conda install -y jupyterlab=2.3.2
 
+
 # Pycrop2ML INSTALLATION
 RUN git clone https://github.com/AgriculturalModelExchangeInitiative/PyCrop2ML.git
 WORKDIR PyCrop2ML
@@ -44,7 +45,6 @@ RUN rm -rf Pycrop2ml_ui
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager qgrid2 --dev-build=False --minimize=False
 
 # C++ KERNEL INSTALLATION
-
 # !! Mamba needs Python>=3.9, which is not compatible with jupyterlab=2.3.2 necessary for qgrid in Pycrop2ml_ui package.
 # RUN conda install -y -c conda-forge mamba
 # RUN mamba install -y xeus-cling -c conda-forge
@@ -170,11 +170,9 @@ ENV DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=false
 USER root
 
 RUN rm -rf /var/lib/apt/lists/*
-
 USER ${USER}
 
 # Set root directory to /home/joyvan/work
 WORKDIR ${HOME}/work/
 
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
-
