@@ -85,7 +85,6 @@ RUN jupyter-kernelspec install --prefix=/opt/conda/ fortran_spec/
 
 WORKDIR ${HOME}
 RUN rm -rf jupyter-fortran-kernel
-
 USER root
 
 # DOTNET KERNEL INSTALLATION
@@ -176,3 +175,4 @@ USER ${USER}
 WORKDIR ${HOME}/work/
 
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
+
