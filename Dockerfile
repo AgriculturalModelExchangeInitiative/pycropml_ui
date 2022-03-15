@@ -174,5 +174,4 @@ USER ${USER}
 
 # Set root directory to /home/joyvan/work
 WORKDIR ${HOME}/work/
-
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
