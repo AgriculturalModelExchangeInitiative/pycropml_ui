@@ -1,6 +1,6 @@
 FROM openjdk:11.0.3-jdk as openjdk
 
-FROM jupyter/r-notebook:latest
+FROM jupyter/r-notebook:python-3.8.8
 
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
@@ -19,7 +19,7 @@ RUN apt-get update
 
 USER ${USER}
 
-RUN conda install -y python"<3.8"
+# RUN conda install -y python=3.7
 RUN conda install -y jupyterlab=2.3.2
 
 
