@@ -10,6 +10,7 @@ from pycrop2ml_ui.menus.creation import createmenu
 from pycrop2ml_ui.menus.edition import editmenu
 from pycrop2ml_ui.cpackage.createpackage import createPackage
 from pycrop2ml_ui.menus.transformation import transformationmenu
+from pycrop2ml_ui.menus.ptransformation import ptransformationmenu
 from pycrop2ml_ui.menus.display.displaymenu import displayMenu
 from pycrop2ml_ui.menus.execution import executionmenu
 from pycrop2ml_ui.menus.download import downloadmenu
@@ -32,6 +33,7 @@ class mainMenu():
     creation -> class createMenu\n
     edition -> class editMenu\n
     transformation -> class transformationMenu\n
+    ptransformation -> class ptransformationMenu\n
     display -> class displayMenu
 
     displayMenu() displays the main menu of the user interface and provides
@@ -51,6 +53,7 @@ class mainMenu():
         self._create = wg.Button(value=False,description='Model creation',disabled=False,layout=self._layout)
         self._edit = wg.Button(value=False,description='Model edition',disabled=False,layout=self._layout)
         self._transformation = wg.Button(value=False,description='Model transformation',disabled=False,layout=self._layout)
+        self._ptransformation = wg.Button(value=False,description='Platform to Crop2ML',disabled=False,layout=self._layout)
         self._execution = wg.Button(value=False,description='Model execution',disabled=False,layout=self._layout)
         self._display = wg.Button(value=False,description='Model display',disabled=False,layout=self._layout)
         self._download = wg.Button(value=False, description='Model download', disabled=False, layout=self._layout)
@@ -69,6 +72,7 @@ class mainMenu():
                                        self._create,
                                        self._edit,
                                        self._transformation,
+                                       self._ptransformation,
                                        self._execution,
                                        self._display,
                                        self._download,
@@ -82,6 +86,7 @@ class mainMenu():
                                        self._create,
                                        self._edit,
                                        self._transformation,
+                                       self._ptransformation,
                                        self._execution,
                                        self._display,
                                        self._download,
@@ -166,6 +171,21 @@ class mainMenu():
             except:
                 raise Exception('Could not load transformation menu.')
 
+    def _eventpTransformation(self, b):
+        """
+        Displays package transformation menu
+        """
+
+        self._out.clear_output()
+        self._out2.clear_output()
+
+        with self._out:
+            try:
+                menu = ptransformationmenu.ptransformationMenu(self.local)
+                menu.displayMenu()     
+            except:
+                raise Exception('Could not load transformation menu.')
+
     def _eventDisplay(self, b):
         """
         Display the model display menu
@@ -226,6 +246,7 @@ class mainMenu():
                 - creation -> class createMenu<br>
                 - edition -> class editMenu<br>
                 - transformation -> class transformationMenu<br>
+                - ptransformation -> class ptransformationMenu<br>
                 - display -> class displayMenu<br><br>
 
                 • displayMenu() displays the main menu of the user interface and provides three buttons clickable leading to each branch. This is the only method
@@ -256,6 +277,7 @@ class mainMenu():
         self._create.on_click(self._eventCreate)
         self._edit.on_click(self._eventEdit)
         self._transformation.on_click(self._eventTransformation)
+        self._ptransformation.on_click(self._eventpTransformation)
         self._display.on_click(self._eventDisplay)
         self._execution.on_click(self._eventExecution)
         self._download.on_click(self._eventDownload)

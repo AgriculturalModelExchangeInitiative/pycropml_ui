@@ -48,7 +48,7 @@ class editUnit():
         self._authors = wg.Textarea(value='',description='Authors:',disabled=False)
         self._institution = wg.Textarea(value='',description='Institution:',disabled=False)
         self._reference = wg.Textarea(value='',description='Reference:',disabled=False)
-        self._abstract = wg.Textarea(value='',description='Abstract:',disabled=False)
+        self._abstract = wg.Textarea(value='',description='ExtendedDescription:',disabled=False)
         self._informations = wg.VBox([self._modelname, self._modelid, self._version, self._timestep, self._title, self._authors, self._institution, self._reference, self._abstract])
 
         self._xmlfile = None
@@ -70,7 +70,7 @@ class editUnit():
         self._authors.value = self._xmlfile.description.Authors
         self._institution.value = self._xmlfile.description.Institution
         self._reference.value = self._xmlfile.description.Reference
-        self._abstract.value = self._xmlfile.description.Abstract
+        self._abstract.value = self._xmlfile.description.ExtendedDescription
 
         if self._xmlfile.inputs:
             self._dataframeIn = pandas.DataFrame(data={
@@ -359,7 +359,7 @@ class editUnit():
             self._datas['Authors'] = self._authors.value
             self._datas['Institution'] = self._institution.value
             self._datas['Reference'] = self._reference.value
-            self._datas['Abstract'] = self._abstract.value
+            self._datas['ExtendedDescription'] = self._abstract.value
 
             self._updateSets()
 

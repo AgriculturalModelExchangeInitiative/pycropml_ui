@@ -33,7 +33,7 @@ class createMenu():
         self._title = wg.Textarea(value='',description='Title:',disabled=False,layout=self._layout)
         self._authors = wg.Textarea(value='',description='Authors:',disabled=False,layout=self._layout)
         self._institution = wg.Textarea(value='',description='Institution:',disabled=False,layout=self._layout)
-        self._abstract = wg.Textarea(value='',description='Abstract:',disabled=False,layout=self._layout) 
+        self._abstract = wg.Textarea(value='',description='ExtendedDescription:',disabled=False,layout=self._layout) 
         self._reference = wg.Textarea(value='',description='Reference:',disabled=False,layout=self._layout)
         
         #model type
@@ -104,7 +104,7 @@ class createMenu():
                         'Authors': self._authors.value,
                         'Institution': self._institution.value,
                         'Reference': self._reference.value,
-                        'Abstract': self._abstract.value
+                        'ExtendedDescription': self._abstract.value
                         }
 
             self._out.clear_output()
@@ -155,7 +155,7 @@ class createMenu():
                 if(not self._reference.value):
                     print("\t- reference")
                 if(not self._abstract.value):
-                    print("\t- abstract")
+                    print("\t- ExtendedDescription")
 
 
                   

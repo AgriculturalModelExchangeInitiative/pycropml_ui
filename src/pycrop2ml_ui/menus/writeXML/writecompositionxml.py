@@ -16,7 +16,7 @@ class writecompositionXML():
                     'Authors': '',
                     'Institution': '',
                     'Reference': '',
-                    'Abstract': '',
+                    'ExtendedDescription': '',
                     'Old name':'' IF iscreate=False
                    }
         
@@ -53,7 +53,7 @@ class writecompositionXML():
 
         buffer += '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE ModelComposition PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">\n'
         buffer += '<ModelComposition name="{0}" id="{1}.{0}" version="{2}" timestep ="{3}">'.format(self._datas['Model name'], self._datas['Model ID'], self._datas['Version'], self._datas['Timestep'])
-        buffer += '\n\t<Description>\n\t\t<Title>{}</Title>\n\t\t<Authors>{}</Authors>\n\t\t<Institution>{}</Institution>\n\t\t<Reference>{}</Reference>\n\t\t<Abstract>{}</Abstract>'.format(self._datas['Title'], self._datas['Authors'], self._datas['Institution'], self._datas['Reference'], self._datas['Abstract'])
+        buffer += '\n\t<Description>\n\t\t<Title>{}</Title>\n\t\t<Authors>{}</Authors>\n\t\t<Institution>{}</Institution>\n\t\t<Reference>{}</Reference>\n\t\t<ExtendedDescription>{}</ExtendedDescription>'.format(self._datas['Title'], self._datas['Authors'], self._datas['Institution'], self._datas['Reference'], self._datas['ExtendedDescription'])
         buffer += '\n\t</Description>\n\n\t<Composition>'
 
         for i in self._listmodel:

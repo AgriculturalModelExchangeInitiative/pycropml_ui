@@ -25,7 +25,7 @@ class manageParamset():
                     'Authors': '',
                     'Institution': '',
                     'Reference': '',
-                    'Abstract': '',
+                    'ExtendedDescription': '',
                     'Old name':'' IF iscreate=False
                    }
         

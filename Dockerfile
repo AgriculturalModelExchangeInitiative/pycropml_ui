@@ -1,6 +1,6 @@
 FROM openjdk:11.0.3-jdk as openjdk
 
-FROM jupyter/r-notebook:latest
+FROM jupyter/r-notebook:lab-3.2.9
 
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
@@ -32,6 +32,24 @@ RUN conda install -c conda-forge graphviz
 WORKDIR ${HOME}
 RUN rm -rf PyCrop2ML
 
+
+
+# Openalea deploy INSTALLATION
+RUN git clone https://github.com/openalea/deploy.git
+WORKDIR deploy
+RUN pip install -r requirements.txt
+RUN pip install .
+WORKDIR ${HOME}
+RUN rm -rf deploy
+
+# Openalea core INSTALLATION
+RUN git clone https://github.com/openalea/core.git
+WORKDIR core
+RUN pip install -r requirements.txt
+RUN pip install .
+WORKDIR ${HOME}
+RUN rm -rf core
+
 # Pycrop2ml_ui installation
 COPY --chown=${UID} . Pycrop2ml_ui
 WORKDIR Pycrop2ml_ui
@@ -42,7 +60,7 @@ RUN cp Pycrop2ml_ui/src/pycrop2ml_ui/AppLauncher.ipynb ${HOME}/work/AppLauncher.
 RUN rm -rf Pycrop2ml_ui
 
 # Some parameters must be set to False for MyBinder, according to https://github.com/matplotlib/ipympl/issues/262
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager qgrid2 --dev-build=False --minimize=False
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 qgrid2 --dev-build=False --minimize=False
 
 # C++ KERNEL INSTALLATION
 # !! Mamba needs Python>=3.9, which is not compatible with jupyterlab=2.3.2 necessary for qgrid in Pycrop2ml_ui package.

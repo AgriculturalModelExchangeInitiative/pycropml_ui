@@ -27,7 +27,7 @@ class createUnit():
                         'Authors': '',
                         'Institution': '',
                         'Reference': '',
-                        'Abstract': ''
+                        'ExtendedDescription': ''
                      }
     """
 
@@ -686,12 +686,12 @@ class createUnit():
         display(self._out)
         display(self._out2)
 
-        listkeys = ['Path','Model type','Model name','Model ID','Version','Timestep','Title','Authors','Institution','Reference','Abstract']
+        listkeys = ['Path','Model type','Model name','Model ID','Version','Timestep','Title','Authors','Institution','Reference','ExtendedDescription']
 
         for i in self._datas.keys():
             with self._out:
                 if i not in listkeys:
-                    raise Exception("Could not display unit model creation menu : parameter data from createUnit(data) must contain these keys ['Path','Model type','Model ID','Model name','Version','Timestep','Title','Authors','Institution','Reference','Abstract']")
+                    raise Exception("Could not display unit model creation menu : parameter data from createUnit(data) must contain these keys ['Path','Model type','Model ID','Model name','Version','Timestep','Title','Authors','Institution','Reference','ExtendedDescription']")
 
                 elif i == 'Model type' and self._datas[i] != 'unit':
                     raise Exception("Bad value error : Model type key's value must be unit.")

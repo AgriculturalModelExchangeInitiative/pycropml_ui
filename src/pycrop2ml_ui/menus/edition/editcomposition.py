@@ -45,7 +45,7 @@ class editComposition():
         self._authors = wg.Textarea(value='',description='Authors:',disabled=False)
         self._institution = wg.Textarea(value='',description='Institution:',disabled=False)
         self._reference = wg.Textarea(value='',description='Reference:',disabled=False)
-        self._abstract = wg.Textarea(value='',description='Abstract:',disabled=False)
+        self._abstract = wg.Textarea(value='',description='ExtendedDescription:',disabled=False)
         self._informations = wg.VBox([self._modelname, self._modelid, self._version, self._timestep, self._title, self._authors, self._institution, self._reference, self._abstract])
 
         #datas
@@ -71,7 +71,7 @@ class editComposition():
         self._authors.value = self._xmlfile.description.Authors
         self._institution.value = self._xmlfile.description.Institution
         self._reference.value = self._xmlfile.description.Reference
-        self._abstract.value = self._xmlfile.description.Abstract
+        self._abstract.value = self._xmlfile.description.ExtendedDescription
 
         self._datas['Old name'] = self._modelname.value                   
 
@@ -285,7 +285,7 @@ class editComposition():
             self._datas['Authors'] = self._authors.value
             self._datas['Institution'] = self._institution.value
             self._datas['Reference'] = self._reference.value
-            self._datas['Abstract'] = self._abstract.value
+            self._datas['ExtendedDescription'] = self._abstract.value
 
             with self._out:
                 menu = manageLink(self._datas, [i for i in self._dataframe['Model name'] if i], self._listlink, listextpkg=self._listextpkg, iscreate=False)
@@ -311,7 +311,7 @@ class editComposition():
                 if(not self._reference.value):
                     print("\t- reference")
                 if(not self._abstract.value):
-                    print("\t- abstract")
+                    print("\t- ExtendedDescription")
     
 
 

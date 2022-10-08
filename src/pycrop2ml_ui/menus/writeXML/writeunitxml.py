@@ -23,7 +23,7 @@ class writeunitXML():
                     'Authors': '',
                     'Institution': '',
                     'Reference': '',
-                    'Abstract': '',
+                    'ExtendedDescription': '',
                     'Old name':'' IF iscreate=False
                    }
 
@@ -158,7 +158,7 @@ class writeunitXML():
         buffer += '\n\t\t<Authors>{}</Authors>'.format(self._datas['Authors'])
         buffer += '\n\t\t<Institution>{}</Institution>'.format(self._datas['Institution'])
         buffer += '\n\t\t<Reference>{}</Reference>'.format(self._datas['Reference'])
-        buffer += '\n\t\t<Abstract>{}</Abstract>'.format(self._datas['Abstract'])+'\n\t</Description>'
+        buffer += '\n\t\t<ExtendedDescription>{}</ExtendedDescription>'.format(self._datas['ExtendedDescription'])+'\n\t</Description>'
         buffer += '\n\n\t<Inputs>'
 
         for i in range(0,len(self._df['Inputs']['Name'])):

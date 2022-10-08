@@ -1,0 +1,11 @@
+index;Variables;Data columns
+0;minTair;minTair (°C)
+1;maxTair;maxTair (°C)
+2;solarRadiation;solarRadiation (MJ/m²/d)
+3;vaporPressure;vaporPressure (hPa)
+4;extraSolarRadiation;extraSolarRadiation (MJ/m²/d)
+5;hslope;hslope (hPa/°C)
+6;plantHeight;plantHeight (mm)
+7;wind;wind (m/d)
+8;deficitOnTopLayers;deficitOnTopLayers (g/m²/d)
+9;VPDair;VPDair (hPa)
