@@ -1,7 +1,6 @@
 FROM openjdk:11.0.3-jdk as openjdk
 
 FROM jupyter/r-notebook:lab-3.2.9
-RUN Rscript -e "install.packages('gsubfn')"
 
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
@@ -51,6 +50,8 @@ RUN pip install .
 WORKDIR ${HOME}
 RUN rm -rf core
 
+RUN pip install -U urllib3 requests
+
 # Pycrop2ml_ui installation
 COPY --chown=${UID} . Pycrop2ml_ui
 WORKDIR Pycrop2ml_ui
@@ -69,6 +70,9 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 qgrid2 --
 # RUN mamba install -y xeus-cling -c conda-forge
 
 RUN conda install -y xeus-cling -c conda-forge
+
+# install R library
+RUN echo 'install.packages(c("gsubfn"),repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R && Rscript /tmp/packages.R
 
 # JAVA KERNEL INSTALLATION
 COPY --from=openjdk /usr/local/openjdk-11 /usr/local/openjdk-11
