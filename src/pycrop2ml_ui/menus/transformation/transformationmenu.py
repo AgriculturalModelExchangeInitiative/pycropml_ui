@@ -50,7 +50,7 @@ class transformationMenu():
         self._stics = wg.Checkbox(value=False, description='Stics', disabled=False)
         self._apsim = wg.Checkbox(value=False, description='Apsim', disabled=False)
 
-        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model transformation</b></font>'), self._pathing, wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
+        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Crop2ML to Platform</b></font>'), self._pathing, wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
 
         self._listlanguage = []
 

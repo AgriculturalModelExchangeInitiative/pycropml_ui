@@ -51,7 +51,7 @@ class ptransformationMenu():
         self._apsim = wg.Checkbox(value=False, description='Apsim', disabled=True)
         self._sirius = wg.Checkbox(value=False, description='Sirius', disabled=False)
 
-        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Model transformation</b></font>'), self._pathing, wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim, self._sirius])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
+        self._displayer = wg.VBox([wg.HTML(value='<font size="5"><b>Platform to Crop2ML</b></font>'), self._pathing, wg.HBox([wg.VBox([self._java, self._csharp, self._fortran, self._python, self._r, self._cpp]),wg.VBox([self._simplace, self._bioma, self._dssat, self._openalea, self._record, self._stics, self._apsim, self._sirius])]), wg.HBox([self._apply, self._cancel])], layout=wg.Layout(align_items='center'))
 
         self._listlanguage = []
 

@@ -52,7 +52,7 @@ class mainMenu():
         self._layout_thin = wg.Layout(width='150px', height='60px')
         self._create = wg.Button(value=False,description='Model creation',disabled=False,layout=self._layout)
         self._edit = wg.Button(value=False,description='Model edition',disabled=False,layout=self._layout)
-        self._transformation = wg.Button(value=False,description='Model transformation',disabled=False,layout=self._layout)
+        self._transformation = wg.Button(value=False,description='Crop2ML to Platform',disabled=False,layout=self._layout)
         self._ptransformation = wg.Button(value=False,description='Platform to Crop2ML',disabled=False,layout=self._layout)
         self._execution = wg.Button(value=False,description='Model execution',disabled=False,layout=self._layout)
         self._display = wg.Button(value=False,description='Model display',disabled=False,layout=self._layout)
