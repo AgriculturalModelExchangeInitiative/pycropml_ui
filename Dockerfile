@@ -192,6 +192,7 @@ RUN dotnet interactive jupyter install
 # Enable telemetry once we install jupyter for the image
 ENV DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=false
 
+
 USER root
 
 RUN rm -rf /var/lib/apt/lists/*
@@ -202,3 +203,5 @@ USER ${USER}
 WORKDIR ${HOME}/work/
 
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
+
+
