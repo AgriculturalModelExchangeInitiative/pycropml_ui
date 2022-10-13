@@ -180,7 +180,6 @@ RUN pip install nteract_on_jupyter
 # Install lastest build of Microsoft.DotNet.Interactive
 RUN dotnet tool install -g Microsoft.dotnet-interactive --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-experimental/nuget/v3/index.json"
 
-
 # RUN dotnet tool install -g --ignore-failed-sources Microsoft.dotnet-interactive --version 1.0.255902
 
 ENV PATH="${PATH}:${HOME}/.dotnet/tools"
@@ -198,6 +197,4 @@ USER ${USER}
 
 # Set root directory to /home/joyvan/work
 WORKDIR ${HOME}/work/
-
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
-
