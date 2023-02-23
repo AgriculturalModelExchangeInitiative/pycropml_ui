@@ -177,6 +177,7 @@ USER ${USER}
 #Install nteract 
 RUN pip install nteract_on_jupyter
 
+
 # Install lastest build of Microsoft.DotNet.Interactive
 RUN dotnet tool install -g Microsoft.dotnet-interactive --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-experimental/nuget/v3/index.json"
 
@@ -188,8 +189,10 @@ RUN echo "$PATH"
 # Install kernel specs
 RUN dotnet interactive jupyter install
 
+
 # Enable telemetry once we install jupyter for the image
 ENV DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=false
+
 
 USER root
 RUN rm -rf /var/lib/apt/lists/*
@@ -198,3 +201,4 @@ USER ${USER}
 # Set root directory to /home/joyvan/work
 WORKDIR ${HOME}/work/
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
+
