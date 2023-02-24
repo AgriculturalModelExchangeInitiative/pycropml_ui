@@ -28,7 +28,7 @@ RUN git clone https://github.com/AgriculturalModelExchangeInitiative/PyCrop2ML.g
 WORKDIR PyCrop2ML
 RUN pip install -r requirements.txt
 RUN pip install .
-RUN conda install -c conda-forge graphviz
+RUN conda install -c anaconda graphviz
 WORKDIR ${HOME}
 RUN rm -rf PyCrop2ML
 
@@ -201,4 +201,3 @@ USER ${USER}
 # Set root directory to /home/joyvan/work
 WORKDIR ${HOME}/work/
 CMD ["/usr/local/bin/start.sh", "jupyter", "lab", "AppLauncher.ipynb"]
-
