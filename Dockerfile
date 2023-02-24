@@ -23,32 +23,9 @@ RUN conda install -y python"<3.8"
 RUN conda install -y jupyterlab=2.3.2
 
 
-# Pycrop2ML INSTALLATION
-RUN git clone https://github.com/AgriculturalModelExchangeInitiative/PyCrop2ML.git
-WORKDIR PyCrop2ML
-RUN pip install -r requirements.txt
-RUN pip install .
-RUN conda install -c anaconda graphviz
-WORKDIR ${HOME}
-RUN rm -rf PyCrop2ML
+# Pycrop2ML and OpenAlea INSTALLATION
+RUN conda install -c amei -c openalea3 -c conda-forge pycropml
 
-
-
-# Openalea deploy INSTALLATION
-RUN git clone https://github.com/openalea/deploy.git
-WORKDIR deploy
-RUN pip install -r requirements.txt
-RUN pip install .
-WORKDIR ${HOME}
-RUN rm -rf deploy
-
-# Openalea core INSTALLATION
-RUN git clone https://github.com/openalea/core.git
-WORKDIR core
-RUN pip install -r requirements.txt
-RUN pip install .
-WORKDIR ${HOME}
-RUN rm -rf core
 
 RUN pip install -U urllib3 requests
 
@@ -69,7 +46,7 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 qgrid2 --
 # RUN conda install -y -c conda-forge mamba
 # RUN mamba install -y xeus-cling -c conda-forge
 
-RUN conda install -y xeus-cling=0.15.0 -c conda-forge
+RUN conda install -y xtensor=0.24.4 xtensor-blas=0.20.0 libstdcxx-devel_linux-64=*=*19 xeus-cling=0.15.0 -c conda-forge
 
 # install R library
 RUN echo 'install.packages(c("gsubfn"),repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R && Rscript /tmp/packages.R
