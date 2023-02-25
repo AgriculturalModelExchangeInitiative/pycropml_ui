@@ -35,9 +35,9 @@ setup_kwds = dict(
     version="0.1.1",
     description=short_descr,
     long_description=readme + '\n\n' + history,
-    author="Romaric JUSTES",
-    author_email="romaric.justes@orange.fr",
-    url='https://github.com/Pyroxyd/Pycrop2ml_ui',
+    author="Romaric JUSTES, Cyrille Midingoyi",
+    author_email="cyrille.midingoyi@cirad.fr",
+    url='https://github.com/AgriculturalModelExchangeInitiative/Pycrop2ml_ui',
     license='MIT',
     zip_safe=False,
 
@@ -62,7 +62,7 @@ setup_kwds = dict(
 # change setup_kwds below before the next pkglts tag
 
 #setup_kwds["entry_points"] = {"console_scripts": ["cyml = pycropml.main:main"]}
-setup_kwds["url"] = "https://github.com/Pyroxyd/Pycrop2ml_ui"
+setup_kwds["url"] = "https://github.com/AgriculturalModelExchangeInitiative/Pycrop2ml_ui"
 #setup_kwds["tests_require"] = ["pytest"]
 
 # do not change things below
