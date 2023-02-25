@@ -4,4 +4,4 @@
 
 User interface for Pycrop2ML...
 
-    conda install -c amei -c openalea3 -c conda-forge pycrop2ml_ui
+    conda install -c amei -c openalea3 -c conda-forge pycrop2ml_ui 'libtiff<4.5'
