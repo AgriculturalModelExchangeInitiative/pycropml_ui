@@ -52,7 +52,7 @@ jobs:
       uses: openalea/action-build-publish-anaconda@v0.1.4
       with:
         conda: conda
-        mamba: true
+        mamba: false
         numpy: '21'
         python: ${{ matrix.python-minor-version }}
         channels: amei, openalea3, conda-forge
