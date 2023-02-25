@@ -24,7 +24,7 @@ RUN conda install -y jupyterlab=2.3.2
 
 
 # Pycrop2ML and OpenAlea INSTALLATION
-RUN conda install -c amei -c openalea3 -c conda-forge pycropml
+RUN conda install -y -c amei -c openalea3 -c conda-forge pycropml
 
 
 RUN pip install -U urllib3 requests

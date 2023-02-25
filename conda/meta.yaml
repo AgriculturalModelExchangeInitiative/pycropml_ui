@@ -27,6 +27,8 @@ requirements:
     - ipyfilechooser ==0.4.4
     - matplotlib-base
     - urllib3
+    - jupyterlab ==2.3.2
+    - requests
 
 
 
