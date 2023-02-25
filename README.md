@@ -3,3 +3,5 @@
 # Pycrop2ml_ui
 
 User interface for Pycrop2ML...
+
+    conda install -c amei -c openalea3 -c conda-forge pycrop2ml_ui
