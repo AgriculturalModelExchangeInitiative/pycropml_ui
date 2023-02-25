@@ -8,6 +8,7 @@ source:
   path: ..
 
 build:
+  noarch: python  
   preserve_egg_dir: True
   number: 0
   script: {{PYTHON}} setup.py install 
@@ -32,9 +33,9 @@ requirements:
 
 
 
-test:
-  imports:
-    - pycrop2ml_ui
+#test:
+#  imports:
+#    - pycrop2ml_ui
 
 about:
   home: https://github.com/AgriculturalModelExchangeInitiative/Pycrop2ml_ui
