@@ -46,7 +46,7 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 qgrid2 --
 # RUN conda install -y -c conda-forge mamba
 # RUN mamba install -y xeus-cling -c conda-forge
 
-RUN conda install -y -c conda-forge xeus-cling=0.15.0 xtensor=0.24.4 xtensor-blas=0.20.0 libstdcxx-devel_linux-64=*=*19
+#RUN conda install -y -c conda-forge xeus-cling=0.15.0 xtensor=0.24.4 xtensor-blas=0.20.0 libstdcxx-devel_linux-64=*=*19
 
 # install R library
 RUN echo 'install.packages(c("gsubfn"),repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R && Rscript /tmp/packages.R
