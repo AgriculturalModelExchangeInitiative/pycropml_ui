@@ -24,7 +24,7 @@ RUN conda install -y jupyterlab=2.3.2
 
 
 # Pycrop2ML and OpenAlea INSTALLATION
-RUN conda install -c amei -c openalea3 -c conda-forge pycropml
+RUN conda install -y -c amei -c openalea3 -c conda-forge pycropml
 
 
 RUN pip install -U urllib3 requests
@@ -46,7 +46,9 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 qgrid2 --
 # RUN conda install -y -c conda-forge mamba
 # RUN mamba install -y xeus-cling -c conda-forge
 
-RUN conda install -y xtensor=0.24.4 xtensor-blas=0.20.0 libstdcxx-devel_linux-64=*=*19 xeus-cling=0.15.0 -c conda-forge
+#RUN conda install -y xtensor=0.24.4 xtensor-blas=0.20.0 libstdcxx-devel_linux-64=*=*19 xeus-cling=0.15.0 -c conda-forge
+
+RUN conda install -y xeus-cling=0.11.0 -c conda-forge
 
 # install R library
 RUN echo 'install.packages(c("gsubfn"),repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R && Rscript /tmp/packages.R
@@ -100,53 +102,50 @@ ENV \
   DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=true
 
 # Install .NET CLI dependencies
-RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-  libc6 \
-  libgcc1 \
-  libgssapi-krb5-2 \
-  libicu66 \
-  libssl1.1 \
-  libstdc++6 \
-  zlib1g \
-  && rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        libc6 \
+        libgcc1 \
+        libgssapi-krb5-2 \
+        libicu66 \
+        libssl1.1 \
+        libstdc++6 \
+        zlib1g
 
 # Install .NET Core SDK
 
 # When updating the SDK version, the sha512 value a few lines down must also be updated.
-ENV DOTNET_SDK_VERSION 6.0.100
+ENV DOTNET_SDK_VERSION 5.0.102
 
-RUN dotnet_sdk_version=6.0.100 \
-  && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-  && dotnet_sha512='cb0d174a79d6294c302261b645dba6a479da8f7cf6c1fe15ae6998bc09c5e0baec810822f9e0104e84b0efd51fdc0333306cb2a0a6fcdbaf515a8ad8cf1af25b' \
-  && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
-  && mkdir -p /usr/share/dotnet \
-  && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
-  && rm dotnet.tar.gz \
-  && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
-  # Trigger first run experience by running arbitrary cmd
-  && dotnet help
+RUN dotnet_sdk_version=5.0.102 \
+    && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
+    && dotnet_sha512='0ce2d5365ca39808fb71baec4584d4ec786491c3735543dc93244604ea97e242377d0987cd8b1e529258dee68f203b5780559201e7ea6d84487d6d8d433329b3' \
+    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
+    && rm dotnet.tar.gz \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    # Trigger first run experience by running arbitrary cmd
+    && dotnet help
 
 
 # Add package sources
 RUN echo "\
-  <configuration>\
+<configuration>\
   <solution>\
-  <add key=\"disableSourceControlIntegration\" value=\"true\" />\
+    <add key=\"disableSourceControlIntegration\" value=\"true\" />\
   </solution>\
   <packageSources>\
-  <clear />\
-  <add key=\"dotnet-experimental\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-experimental/nuget/v3/index.json\" />\
-  <add key=\"dotnet-public\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-public/nuget/v3/index.json\" />\
-  <add key=\"dotnet-eng\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-eng/nuget/v3/index.json\" />\
-  <add key=\"dotnet-tools\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json\" />\
-  <add key=\"dotnet-libraries\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-libraries/nuget/v3/index.json\" />\
-  <add key=\"dotnet5\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json\" />\
-  <add key=\"MachineLearning\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/MachineLearning/nuget/v3/index.json\" />\
+    <clear />\
+    <add key=\"dotnet-public\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-public/nuget/v3/index.json\" />\
+    <add key=\"dotnet-eng\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-eng/nuget/v3/index.json\" />\
+    <add key=\"dotnet-tools\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json\" />\
+    <add key=\"dotnet-libraries\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-libraries/nuget/v3/index.json\" />\
+    <add key=\"dotnet5\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json\" />\
+    <add key=\"MachineLearning\" value=\"https://pkgs.dev.azure.com/dnceng/public/_packaging/MachineLearning/nuget/v3/index.json\" />\
   </packageSources>\
   <disabledPackageSources />\
-  </configuration>\
-  " > ${HOME}/NuGet.config
+</configuration>\
+" > ${HOME}/NuGet.config
 
 RUN chown -R ${UID} ${HOME}
 USER ${USER}
@@ -156,9 +155,9 @@ RUN pip install nteract_on_jupyter
 
 
 # Install lastest build of Microsoft.DotNet.Interactive
-RUN dotnet tool install -g Microsoft.dotnet-interactive --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-experimental/nuget/v3/index.json"
+#RUN dotnet tool install -g Microsoft.dotnet-interactive --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-experimental/nuget/v3/index.json"
 
-# RUN dotnet tool install -g --ignore-failed-sources Microsoft.dotnet-interactive --version 1.0.255902
+RUN dotnet tool install -g --ignore-failed-sources Microsoft.dotnet-interactive --version 1.0.255902
 
 ENV PATH="${PATH}:${HOME}/.dotnet/tools"
 RUN echo "$PATH"
