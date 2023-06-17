@@ -46,7 +46,6 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@2 qgrid2 --
 # RUN conda install -y -c conda-forge mamba
 # RUN mamba install -y xeus-cling -c conda-forge
 
-RUN conda install -y xtensor=0.24.4 xtensor-blas=0.20.0 libstdcxx-devel_linux-64=*=*19 xeus-cling=0.15.0 -c conda-forge
 
 RUN conda install -y xeus-cling=0.11.0 -c conda-forge
 
